@@ -2,19 +2,19 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://your-custom-domain.com/",
-    title: "My Blog",
-    description: "A modern, responsive blog.",
-    author: "Your Name",
-    profile: "https://yourprofile.com",
+    url: "https://blog.xiaozha.org/",
+    title: "XiaoZha's Blog",
+    description: "A modern, neumorphic-style personal blog.",
+    author: "XiaoZha",
+    profile: "https://xiaozha.org",
     ogImage: "default-og.jpg",
     lang: "en",
     timezone: "UTC",
     dir: "ltr",
   },
   posts: {
-    perPage: 4,
-    perIndex: 4,
+    perPage: 6,
+    perIndex: 6,
     scheduledPostMargin: 15 * 60 * 1000,
   },
   features: {
@@ -28,7 +28,7 @@ export default defineAstroPaperConfig({
     search: "pagefind",
   },
   socials: [
-    { name: "github", url: "https://github.com/your-username" },
+    { name: "github", url: "https://github.com/xiaozhaorg" },
   ],
   shareLinks: [
     { name: "x", url: "https://x.com/intent/post?url=" },
