@@ -23,9 +23,11 @@ const t = useTranslations(locale);
   <Breadcrumb />
 
   <Main pageTitle={t.pages.tagsTitle} pageDesc={t.pages.tagsDesc}>
-    <ul class="flex flex-wrap gap-6">
-      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} />)}
-    </ul>
+    <div class="neu-card p-8">
+      <ul class="flex flex-wrap gap-4">
+        {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} />)}
+      </ul>
+    </div>
   </Main>
 
   <Footer />

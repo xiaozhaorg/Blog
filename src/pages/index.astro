@@ -27,97 +27,76 @@ const homePath = getRelativeLocaleUrl(locale, "");
 
 <Layout>
   <Header />
-  <main
-    id="main-content"
-    data-layout="index"
-    data-home-path={homePath}
-    class="app-layout"
-  >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Mingalaba
-      </h1>
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
+  <main id="main-content" data-layout="index" data-home-path={homePath} class="app-layout">
+    <section id="hero" class="pt-8 pb-6">
+      <div class="neu-flat p-8 mb-8">
+        <div class="flex items-center gap-4 mb-6">
+          <h1 class="text-4xl font-bold tracking-tight">
+            Welcome
+          </h1>
+          <a
+            target="_blank"
+            href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
+            class="neu-button p-2.5"
+            aria-label="RSS Feed"
+            title="RSS Feed"
+          >
+            <IconRss class="size-5" />
+          </a>
+        </div>
 
-      <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
-      </p>
-      <p class="mt-2">
-        Read the blog posts or check
-        <LinkButton
-          class="hover:text-accent underline decoration-dashed underline-offset-4"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton> for more info.
-      </p>
-      {
-        socials.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-              {t.home.socialLinks}:
+        <p class="text-lg leading-relaxed text-[var(--neu-text-muted)] max-w-2xl">
+          A modern personal blog built with Astro, featuring a beautiful neumorphic design.
+          Explore articles on technology, lifestyle, and creative ideas.
+        </p>
+
+        {
+          socials.length > 0 && (
+            <div class="mt-6 flex items-center gap-3">
+              <span class="text-sm text-[var(--neu-text-muted)]">Connect:</span>
+              <Socials />
             </div>
-            <Socials />
-          </div>
-        )
-      }
+          )
+        }
+      </div>
     </section>
 
     {
       featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-border border-b": recentPosts.length > 0 },
-          ]}
-        >
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.featured}
+        <section id="featured" class="py-8">
+          <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+            <span class="neu-inset px-4 py-2 text-sm">Featured</span>
           </h2>
-          <ul>
+          <div class="grid gap-6 md:grid-cols-2">
             {featuredPosts.map(data => (
               <Card variant="h3" {...data} />
             ))}
-          </ul>
+          </div>
         </section>
       )
     }
 
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {t.home.recentPosts}
+        <section id="recent-posts" class="py-8">
+          <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+            <span class="neu-inset px-4 py-2 text-sm">Recent Posts</span>
           </h2>
-          <ul>
+          <div class="grid gap-6 md:grid-cols-2">
             {recentPosts.slice(0, postsConfig.perIndex).map(data => (
               <Card variant="h3" {...data} />
             ))}
-          </ul>
+          </div>
         </section>
       )
     }
 
     <div class="my-8 text-center">
-      <LinkButton href={getRelativeLocaleUrl(locale, "posts")}>
-        {t.home.allPosts}
+      <LinkButton
+        href={getRelativeLocaleUrl(locale, "posts")}
+        class="neu-button px-8 py-4 text-lg font-medium"
+      >
+        View All Posts
         <IconArrowRight class="inline-block rtl:-rotate-180" />
       </LinkButton>
     </div>

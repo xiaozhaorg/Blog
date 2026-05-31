@@ -10,10 +10,23 @@
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-app);
+    background-color: var(--neu-bg);
+    color: var(--neu-text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
   a,
   button {
     @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
@@ -21,15 +34,79 @@
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-4xl;
 }
 
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply max-w-app mx-auto w-full px-6;
 }
 
 @utility active-nav {
   @apply underline decoration-wavy decoration-2 underline-offset-8;
+}
+
+@utility neu-flat {
+  background: var(--neu-bg);
+  border-radius: 16px;
+  box-shadow:
+    8px 8px 16px var(--neu-shadow-dark),
+    -8px -8px 16px var(--neu-shadow-light);
+}
+
+@utility neu-pressed {
+  background: var(--neu-bg);
+  border-radius: 16px;
+  box-shadow:
+    inset 4px 4px 8px var(--neu-shadow-dark),
+    inset -4px -4px 8px var(--neu-shadow-light);
+}
+
+@utility neu-button {
+  background: var(--neu-bg);
+  border-radius: 12px;
+  box-shadow:
+    6px 6px 12px var(--neu-shadow-dark),
+    -6px -6px 12px var(--neu-shadow-light);
+  transition: all 0.2s ease;
+}
+
+@utility neu-button:hover {
+  box-shadow:
+    4px 4px 8px var(--neu-shadow-dark),
+    -4px -4px 8px var(--neu-shadow-light);
+  transform: translateY(-1px);
+}
+
+@utility neu-button:active {
+  box-shadow:
+    inset 2px 2px 4px var(--neu-shadow-dark),
+    inset -2px -2px 4px var(--neu-shadow-light);
+  transform: translateY(0);
+}
+
+@utility neu-card {
+  background: var(--neu-bg);
+  border-radius: 20px;
+  box-shadow:
+    10px 10px 20px var(--neu-shadow-dark),
+    -10px -10px 20px var(--neu-shadow-light);
+  border: 1px solid var(--neu-border);
+  transition: all 0.3s ease;
+}
+
+@utility neu-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    15px 15px 30px var(--neu-shadow-dark),
+    -15px -15px 30px var(--neu-shadow-light);
+}
+
+@utility neu-inset {
+  background: var(--neu-bg);
+  border-radius: 12px;
+  box-shadow:
+    inset 4px 4px 8px var(--neu-shadow-dark),
+    inset -4px -4px 8px var(--neu-shadow-light);
 }
 
 :target {

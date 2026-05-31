@@ -16,15 +16,19 @@ const t = useTranslations(locale);
 
   <main
     id="main-content"
-    class="app-layout flex flex-1 items-center justify-center"
+    class="app-layout flex flex-1 items-center justify-center py-20"
   >
-    <div class="mb-14 flex flex-col items-center justify-center">
-      <h1 class="text-accent text-9xl font-bold">404</h1>
-      <span aria-hidden="true"> ¯\_(�?_/¯ </span>
-      <p class="mt-4 text-2xl sm:text-3xl">{t.notFound.message}</p>
+    <div class="neu-card p-12 text-center">
+      <h1 class="text-8xl font-bold mb-4" style="color: var(--neu-accent);">
+        404
+      </h1>
+      <p class="text-2xl mb-2">Oops! Page not found</p>
+      <p class="text-[var(--neu-text-muted)] mb-8">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
       <LinkButton
         href={getRelativeLocaleUrl(locale, "")}
-        class="my-6 text-lg underline decoration-dashed underline-offset-8"
+        class="neu-button px-8 py-4 text-lg font-medium"
       >
         {t.notFound.goHome}
       </LinkButton>

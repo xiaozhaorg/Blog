@@ -1,7 +1,6 @@
 @plugin "@tailwindcss/typography";
 
 @layer base {
-  /* ===== Override default Tailwind Typography styles ===== */
   .app-prose {
     @apply prose;
 
@@ -10,11 +9,19 @@
     h3,
     h4,
     th {
-      @apply text-foreground mb-3;
+      @apply text-[var(--neu-text)] mb-3;
+    }
+
+    h2 {
+      @apply text-2xl font-semibold mt-8;
     }
 
     h3 {
-      @apply italic;
+      @apply text-xl font-medium italic;
+    }
+
+    h4 {
+      @apply text-lg;
     }
 
     p,
@@ -24,11 +31,15 @@
     figcaption,
     table,
     code {
-      @apply text-foreground;
+      @apply text-[var(--neu-text)];
+    }
+
+    p {
+      @apply leading-relaxed my-4;
     }
 
     a {
-      @apply text-foreground hover:text-accent wrap-break-word decoration-dashed underline-offset-4 focus-visible:no-underline;
+      @apply text-[var(--neu-accent)] hover:underline decoration-dashed underline-offset-4;
     }
 
     ul {
@@ -36,34 +47,40 @@
     }
 
     li {
-      @apply marker:text-accent;
+      @apply marker:text-[var(--neu-accent)];
     }
 
     hr {
-      @apply border-border;
+      @apply border-[var(--neu-border)] my-8;
     }
 
     img {
-      @apply border-border mx-auto border;
+      @apply mx-auto border border-[var(--neu-border)] rounded-xl my-6;
     }
 
     figcaption {
-      @apply opacity-75;
+      @apply opacity-75 text-center my-4;
     }
 
     table {
+      @apply neu-card overflow-hidden;
+
       th,
       td {
-        @apply border-border border p-2;
+        @apply border border-[var(--neu-border)] p-3;
       }
 
       th {
-        @apply py-1.5;
+        @apply py-2.5 font-semibold;
+      }
+
+      tr:hover td {
+        @apply bg-[var(--neu-shadow-dark)]/20;
       }
     }
 
     code {
-      @apply bg-muted/75 text-foreground rounded p-1 wrap-break-word before:content-none after:content-none;
+      @apply bg-[var(--neu-shadow-dark)]/30 text-[var(--neu-accent)] rounded-lg px-2 py-1 font-mono text-sm;
     }
 
     .astro-code code {
@@ -71,45 +88,27 @@
     }
 
     blockquote {
-      @apply border-s-accent/80 wrap-break-word opacity-80;
+      @apply neu-inset border-l-4 border-l-[var(--neu-accent)] pl-6 py-4 my-6;
     }
 
     details {
-      @apply text-foreground inline-block cursor-pointer select-none [&_p]:hidden [&_ul]:my-0!;
+      @apply text-[var(--neu-text)] inline-block cursor-pointer select-none my-4;
     }
 
     summary {
-      @apply focus-visible:outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed;
+      @apply font-medium cursor-pointer p-2 hover:text-[var(--neu-accent)] transition-colors;
     }
 
     pre {
-      @apply focus-visible:outline-accent focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-dashed;
+      @apply neu-card p-4 overflow-x-auto my-6;
     }
   }
 
-  /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
     @apply outline-border flex border bg-(--shiki-light-bg) text-(--shiki-light) [&_span]:text-(--shiki-light);
   }
 
   html[data-theme="dark"] .astro-code {
     @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
-  }
-
-  /* Styles for Shiki transformers */
-  /* https://shiki.style/packages/transformers */
-  .astro-code {
-    .line.diff.add {
-      @apply relative inline-block w-full bg-green-400/20 before:absolute before:-left-3 before:text-green-500 before:content-['+'];
-    }
-    .line.diff.remove {
-      @apply relative inline-block w-full bg-red-500/20 before:absolute before:-left-3 before:text-red-500 before:content-['-'];
-    }
-    .line.highlighted {
-      @apply inline-block w-full bg-slate-400/20;
-    }
-    .highlighted-word {
-      @apply border-border rounded-sm border px-0.5 py-px;
-    }
   }
 }
