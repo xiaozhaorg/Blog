@@ -1,4 +1,4 @@
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { getRelativeLocaleUrl } from "@/i18n/utils";
 import { BLOG_PATH } from "@/content.config";
 import { slugifyStr } from "./slugify";
 import config from "@/config";
@@ -30,7 +30,7 @@ function getPostSlugPath(id: string, filePath: string | undefined): string {
 
 /**
  * Returns the slug-only path for use as a route param in `getStaticPaths`.
- * No base prefix, no locale â€” Astro handles those at a higher level.
+ * No base prefix, no locale â€?Astro handles those at a higher level.
  * e.g. `/examples/my-post`
  */
 export function getPostSlug(id: string, filePath: string | undefined): string {

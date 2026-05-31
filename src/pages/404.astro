@@ -3,7 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import LinkButton from "@/components/LinkButton.astro";
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { getRelativeLocaleUrl } from "@/i18n/utils";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
 
@@ -20,7 +20,7 @@ const t = useTranslations(locale);
   >
     <div class="mb-14 flex flex-col items-center justify-center">
       <h1 class="text-accent text-9xl font-bold">404</h1>
-      <span aria-hidden="true"> ¯\_(ツ)_/¯ </span>
+      <span aria-hidden="true"> ¯\_(�?_/¯ </span>
       <p class="mt-4 text-2xl sm:text-3xl">{t.notFound.message}</p>
       <LinkButton
         href={getRelativeLocaleUrl(locale, "")}
