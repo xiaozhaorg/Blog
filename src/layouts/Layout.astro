@@ -1,8 +1,9 @@
 ---
+import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
 import { getAssetPath } from "@/utils/withBase";
-import { getRelativeLocaleUrl } from "@/i18n/utils";
 import config from "@/config";
 import "@/styles/global.css";
 
@@ -23,13 +24,16 @@ const {
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.site ?? Astro.url);
-const rssHref = getRelativeLocaleUrl(config.site.lang, "rss.xml");
+const rssHref = getRelativeLocaleUrl(
+  Astro.currentLocale ?? config.site.lang,
+  "rss.xml"
+);
 ---
 
 <!doctype html>
 <html
   dir={site.dir ?? "ltr"}
-  lang={site.lang}
+  lang={Astro.currentLocale ?? site.lang}
   class="overflow-y-scroll scroll-smooth"
 >
   <head>
@@ -40,12 +44,20 @@ const rssHref = getRelativeLocaleUrl(config.site.lang, "rss.xml");
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Font -->
+    <Font
+      cssVariable="--font-google-sans-code"
+      preload={[{ subset: "latin", weight: 400, style: "normal" }]}
+    />
+
+    <!-- Primary meta -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content={site.author} />
     <link rel="sitemap" href={getAssetPath("sitemap-index.xml")} />
 
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.title} />
     <meta property="og:title" content={title} />
@@ -53,12 +65,14 @@ const rssHref = getRelativeLocaleUrl(config.site.lang, "rss.xml");
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
 
+    <!-- Twitter / X -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
+    <!-- RSS autodiscovery -->
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -66,8 +80,10 @@ const rssHref = getRelativeLocaleUrl(config.site.lang, "rss.xml");
       href={new URL(rssHref, Astro.site)}
     />
 
+    <!-- Filled at runtime by theme.ts to match the current background colour -->
     <meta name="theme-color" content="" />
 
+    <!-- Extra head content injected by child layouts (e.g. JSON-LD, article meta) -->
     <slot name="head" />
 
     {
@@ -79,6 +95,10 @@ const rssHref = getRelativeLocaleUrl(config.site.lang, "rss.xml");
       )
     }
 
+    <!--
+      Inline FOUC-prevention script: sets data-theme on <html> before
+      the browser paints. Runs synchronously, no defer/async.
+    -->
     <script is:inline>
       (function () {
         const stored = localStorage.getItem("theme");
@@ -87,6 +107,7 @@ const rssHref = getRelativeLocaleUrl(config.site.lang, "rss.xml");
         ).matches;
         const theme = stored ?? (prefersDark ? "dark" : "light");
         document.firstElementChild?.setAttribute("data-theme", theme);
+        // Expose value so theme.ts can skip re-detection.
         window.__theme = { value: theme };
       })();
     </script>
