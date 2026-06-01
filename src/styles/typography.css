@@ -2,26 +2,37 @@
 
 @layer base {
   .app-prose {
-    @apply prose;
+    max-width: 65ch;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--neu-text);
 
     h1,
     h2,
     h3,
     h4,
     th {
-      @apply text-[var(--neu-text)] mb-3;
+      color: var(--neu-text);
+      margin-bottom: 0.75rem;
     }
 
     h2 {
-      @apply text-2xl font-semibold mt-8;
+      font-size: 1.5rem;
+      line-height: 2rem;
+      font-weight: 600;
+      margin-top: 2rem;
     }
 
     h3 {
-      @apply text-xl font-medium italic;
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      font-weight: 500;
+      font-style: italic;
     }
 
     h4 {
-      @apply text-lg;
+      font-size: 1.125rem;
+      line-height: 1.75rem;
     }
 
     p,
@@ -31,84 +42,154 @@
     figcaption,
     table,
     code {
-      @apply text-[var(--neu-text)];
+      color: var(--neu-text);
     }
 
     p {
-      @apply leading-relaxed my-4;
+      line-height: 1.625;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
     }
 
     a {
-      @apply text-[var(--neu-accent)] hover:underline decoration-dashed underline-offset-4;
+      color: var(--neu-accent);
+      text-decoration: underline;
+      text-decoration-style: dashed;
+      text-underline-offset: 4px;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
     ul {
-      @apply overflow-x-clip;
+      overflow-x: clip;
     }
 
-    li {
-      @apply marker:text-[var(--neu-accent)];
+    li::marker {
+      color: var(--neu-accent);
     }
 
     hr {
-      @apply border-[var(--neu-border)] my-8;
+      border-color: var(--neu-border);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
     }
 
     img {
-      @apply mx-auto border border-[var(--neu-border)] rounded-xl my-6;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid var(--neu-border);
+      border-radius: 0.75rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
     }
 
     figcaption {
-      @apply opacity-75 text-center my-4;
+      opacity: 0.75;
+      text-align: center;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
     }
 
     table {
-      @apply neu-card overflow-hidden;
+      border-radius: 20px;
+      overflow: hidden;
+    }
 
-      th,
-      td {
-        @apply border border-[var(--neu-border)] p-3;
-      }
+    table th,
+    table td {
+      border: 1px solid var(--neu-border);
+      padding: 0.75rem;
+    }
 
-      th {
-        @apply py-2.5 font-semibold;
-      }
+    table th {
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+      font-weight: 600;
+    }
 
-      tr:hover td {
-        @apply bg-[var(--neu-shadow-dark)]/20;
-      }
+    table tr:hover td {
+      background-color: color-mix(in srgb, var(--neu-shadow-dark) 20%, transparent);
     }
 
     code {
-      @apply bg-[var(--neu-shadow-dark)]/30 text-[var(--neu-accent)] rounded-lg px-2 py-1 font-mono text-sm;
+      background-color: color-mix(in srgb, var(--neu-shadow-dark) 30%, transparent);
+      color: var(--neu-accent);
+      border-radius: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      line-height: 1.25rem;
     }
 
     .astro-code code {
-      @apply flex-[1_0_100%] bg-inherit p-0;
+      flex: 1 0 100%;
+      background: inherit;
+      padding: 0;
     }
 
     blockquote {
-      @apply neu-inset border-l-4 border-l-[var(--neu-accent)] pl-6 py-4 my-6;
+      border-left-width: 4px;
+      border-left-color: var(--neu-accent);
+      border-left-style: solid;
+      padding-left: 1.5rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
     }
 
     details {
-      @apply text-[var(--neu-text)] inline-block cursor-pointer select-none my-4;
+      color: var(--neu-text);
+      display: inline-block;
+      cursor: pointer;
+      user-select: none;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
     }
 
     summary {
-      @apply font-medium cursor-pointer p-2 hover:text-[var(--neu-accent)] transition-colors;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: inherit;
+      transition: color 0.2s ease;
+    }
+
+    summary:hover {
+      color: var(--neu-accent);
     }
 
     pre {
-      @apply neu-card p-4 overflow-x-auto my-6;
+      background: var(--neu-bg);
+      border-radius: 20px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--neu-border);
     }
   }
 
   .astro-code {
-    @apply outline-border flex border bg-(--shiki-light-bg) text-(--shiki-light) [&_span]:text-(--shiki-light);
+    outline-color: var(--color-border);
+    display: flex;
+    border: 1px solid var(--color-border);
+    background: var(--shiki-light-bg);
+    color: var(--shiki-light);
+  }
+
+  .astro-code span {
+    color: var(--shiki-light);
   }
 
   html[data-theme="dark"] .astro-code {
-    @apply bg-(--shiki-dark-bg) text-(--shiki-dark) [&_span]:text-(--shiki-dark);
+    background: var(--shiki-dark-bg);
+    color: var(--shiki-dark);
+  }
+
+  html[data-theme="dark"] .astro-code span {
+    color: var(--shiki-dark);
   }
 }

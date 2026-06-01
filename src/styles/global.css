@@ -6,7 +6,8 @@
 
 @layer base {
   * {
-    @apply border-border outline-accent/75;
+    border-color: var(--color-border);
+    outline-color: color-mix(in srgb, var(--color-accent) 75%, transparent);
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
@@ -24,7 +25,15 @@
 
   a,
   button {
-    @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+    outline-color: var(--color-accent);
+    outline-offset: 1px;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    text-decoration: none;
+    outline-width: 2px;
+    outline-style: dashed;
   }
 
   button:not(:disabled),
@@ -33,19 +42,27 @@
   }
 }
 
-@utility max-w-app {
-  @apply max-w-4xl;
+.max-w-app {
+  max-width: 56rem;
 }
 
-@utility app-layout {
-  @apply max-w-app mx-auto w-full px-6;
+.app-layout {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
-@utility active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
+.active-nav {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
 }
 
-@utility neu-flat {
+.neu-flat {
   background: var(--neu-bg);
   border-radius: 16px;
   box-shadow:
@@ -53,7 +70,7 @@
     -8px -8px 16px var(--neu-shadow-light);
 }
 
-@utility neu-pressed {
+.neu-pressed {
   background: var(--neu-bg);
   border-radius: 16px;
   box-shadow:
@@ -61,7 +78,7 @@
     inset -4px -4px 8px var(--neu-shadow-light);
 }
 
-@utility neu-button {
+.neu-button {
   background: var(--neu-bg);
   border-radius: 12px;
   box-shadow:
@@ -70,21 +87,21 @@
   transition: all 0.2s ease;
 }
 
-@utility neu-button:hover {
+.neu-button:hover {
   box-shadow:
     4px 4px 8px var(--neu-shadow-dark),
     -4px -4px 8px var(--neu-shadow-light);
   transform: translateY(-1px);
 }
 
-@utility neu-button:active {
+.neu-button:active {
   box-shadow:
     inset 2px 2px 4px var(--neu-shadow-dark),
     inset -2px -2px 4px var(--neu-shadow-light);
   transform: translateY(0);
 }
 
-@utility neu-card {
+.neu-card {
   background: var(--neu-bg);
   border-radius: 20px;
   box-shadow:
@@ -94,14 +111,14 @@
   transition: all 0.3s ease;
 }
 
-@utility neu-card:hover {
+.neu-card:hover {
   transform: translateY(-4px);
   box-shadow:
     15px 15px 30px var(--neu-shadow-dark),
     -15px -15px 30px var(--neu-shadow-light);
 }
 
-@utility neu-inset {
+.neu-inset {
   background: var(--neu-bg);
   border-radius: 12px;
   box-shadow:
