@@ -5,13 +5,13 @@ slug: hi-welcome
 featured: false
 draft: false
 tags: ["日常记录"]
-description: 这是博客的第一篇文章，介绍了本站和博主。
+description: 这是博客的第一篇文章，介绍了本站和博主。（更新于2026年6月）
 ---
 
 Hi!
 
 
-这是这个博客的第一篇文章，它是由Hexo搭建的，使用的是Next主题，主题的源码在[这里](https://github.com/theme-next/hexo-theme-next)。
+这是这个博客的第一篇文章，它是由Astro搭建的，
 
 
 ## 关于本站
