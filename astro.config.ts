@@ -8,6 +8,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
+import rehypeSlug from "rehype-slug";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -34,6 +35,7 @@ export default defineConfig({
   },
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
+    rehypePlugins: [rehypeSlug],
     shikiConfig: {
       themes: { light: "min-light", dark: "night-owl" },
       defaultColor: false,
