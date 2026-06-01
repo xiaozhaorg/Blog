@@ -50,6 +50,14 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss() as any],
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
+    optimizeDeps: {
+      include: ["tailwindcss"],
+    },
   },
   env: {
     schema: {
