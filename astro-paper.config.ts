@@ -2,7 +2,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://blog.xiaozha.org/",
+    url: "https://xiaozha.org/",
     title: "小吒の博客",
     description: "一个现代化的 Neumorphic 风格个人博客。",
     author: "小吒",
