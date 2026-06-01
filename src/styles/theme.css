@@ -12,6 +12,9 @@
   --color-card-foreground: var(--card-foreground);
   --color-shadow: var(--shadow);
   --color-shadow-dark: var(--shadow-dark);
+}
+
+:root {
   --font-app: 'Outfit', sans-serif;
   --font-mono: 'Source Code Pro', monospace;
 }

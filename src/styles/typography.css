@@ -118,7 +118,7 @@
       color: var(--neu-accent);
       border-radius: 0.5rem;
       padding: 0.25rem 0.5rem;
-      font-family: var(--font-mono);
+      font-family: 'Source Code Pro', monospace;
       font-size: 0.875rem;
       line-height: 1.25rem;
     }
