@@ -3,13 +3,13 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://blog.xiaozha.org/",
-    title: "XiaoZha's Blog",
-    description: "A modern, neumorphic-style personal blog.",
-    author: "XiaoZha",
+    title: "小吒の博客",
+    description: "一个现代化的 Neumorphic 风格个人博客。",
+    author: "小吒",
     profile: "https://xiaozha.org",
     ogImage: "default-og.jpg",
-    lang: "en",
-    timezone: "UTC",
+    lang: "zh",
+    timezone: "Asia/Shanghai",
     dir: "ltr",
   },
   posts: {
