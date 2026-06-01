@@ -4,7 +4,7 @@ const DEFAULT_LOCALE = config.site.lang || "en";
 
 export function getRelativeLocaleUrl(locale: string = DEFAULT_LOCALE, path: string = ""): string {
   const base = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
-  return path ? `${base}/${path}` : base;
+  return path ? `${base}/${path}` : (base || "/");
 }
 
 export function getAbsoluteLocaleUrl(locale: string = DEFAULT_LOCALE, path: string = ""): string {
