@@ -3,7 +3,6 @@ import {
   envField,
   svgoOptimizer,
 } from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
@@ -49,14 +48,10 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [tailwindcss() as any],
     resolve: {
       alias: {
         "@": "/src",
       },
-    },
-    optimizeDeps: {
-      include: ["tailwindcss"],
     },
   },
   env: {
