@@ -21,7 +21,7 @@ description: "关于小吒の博客和我"
 
 ## 联系方式
 
-- 邮箱：<mail@xiaozha.org>
+- 邮箱：<a href="#" onclick="window.location.href='mailto:mail@xiaozha.org';return false;">mail@xiaozha.org</a>
 - 博客：https://xiaozha.org
 
 如果你有任何问题或建议，欢迎留言交流！
