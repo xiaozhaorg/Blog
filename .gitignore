@@ -33,3 +33,6 @@ public/pagefind
 
 # docker compose
 compose.override.yaml
+
+# local scripts
+git-push-retry.ps1

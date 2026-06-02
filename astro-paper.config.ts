@@ -28,9 +28,13 @@ export default defineAstroPaperConfig({
     search: "pagefind",
   },
   socials: [
-    { name: "github", url: "https://github.com/xiaozhaorg" },
+    { name: "mail", url: "mailto:mail@xiaozha.org" },
   ],
   shareLinks: [
     { name: "x", url: "https://x.com/intent/post?url=" },
+    { name: "weibo", url: "https://service.weibo.com/share/share.php?url=", linkTitle: "分享到微博" },
+    { name: "qq", url: "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=", linkTitle: "分享到QQ空间" },
+    { name: "zhihu", url: "https://www.zhihu.com/", linkTitle: "分享到知乎" },
+    { name: "wechat", url: "https://xiaozha.org", linkTitle: "微信分享（截图发送）" },
   ],
 });

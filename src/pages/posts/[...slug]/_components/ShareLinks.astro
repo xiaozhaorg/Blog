@@ -10,21 +10,41 @@ const icons = import.meta.glob<{
   default: (_props: Record<string, unknown>) => unknown;
 }>("/src/assets/icons/socials/*.svg");
 
-const pageUrl = Astro.url;
+const pageUrl = Astro.url.toString();
+const pageTitle = encodeURIComponent(Astro.props.title || "");
 
 const platformLabel = (name: string) =>
   name.charAt(0).toUpperCase() + name.slice(1);
+
+const getShareUrl = (baseUrl: string, name: string) => {
+  const encodedUrl = encodeURIComponent(pageUrl);
+  const encodedTitle = pageTitle;
+
+  switch (name) {
+    case "weibo":
+      return `${baseUrl}${encodedUrl}&title=${encodedTitle}`;
+    case "qq":
+      return `${baseUrl}${encodedUrl}&title=${encodedTitle}&desc=${encodedTitle}`;
+    case "zhihu":
+      return `https://www.zhihu.com/search?type=content&q=${encodedTitle}`;
+    case "wechat":
+      return "https://xiaozha.org";
+    default:
+      return `${baseUrl}${encodedUrl}`;
+  }
+};
 
 const items = await Promise.all(
   shareLinks.map(async ({ name, url, linkTitle }) => {
     const mod = await icons[`/src/assets/icons/socials/${name}.svg`]?.();
     const Icon = mod?.default;
+    const shareUrl = getShareUrl(url, name);
     const title =
       linkTitle ??
       (name === "mail"
         ? t.post.sharePostViaEmail
         : tplStr(t.post.sharePostOn, { platform: platformLabel(name) }));
-    return { url, title, Icon };
+    return { url: shareUrl, title, Icon };
   })
 );
 ---
