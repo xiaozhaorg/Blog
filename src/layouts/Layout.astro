@@ -95,14 +95,8 @@ const rssHref = getRelativeLocaleUrl(
     </script>
 
     <!-- Google AdSense -->
-    {site.googleAdsense && (
-      <script
-        is:inline
-        async
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${site.googleAdsense}`}
-        crossorigin="anonymous"
-      ></script>
-    )}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8462449606343172"
+      crossorigin="anonymous"></script>
 
     <ClientRouter />
   </head>
