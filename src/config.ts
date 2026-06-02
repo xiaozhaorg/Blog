@@ -17,6 +17,7 @@ const config: ResolvedAstroPaperConfig = {
     timezone: userConfig.site.timezone ?? "UTC",
     dir: userConfig.site.dir ?? "ltr",
     googleVerification: userConfig.site.googleVerification,
+    googleAdsense: userConfig.site.googleAdsense,
   },
   posts: {
     perPage: userConfig.posts?.perPage ?? 4,
