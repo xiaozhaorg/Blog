@@ -1,6 +1,9 @@
 import type { UIStrings } from "../types";
 
 export default {
+  site: {
+    title: "Xiaozha's Blog",
+  },
   nav: {
     home: "Home",
     posts: "Posts",

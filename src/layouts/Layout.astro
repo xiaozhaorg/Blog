@@ -33,7 +33,7 @@ const rssHref = getRelativeLocaleUrl(
 <html
   dir={site.dir ?? "ltr"}
   lang={Astro.currentLocale ?? site.lang}
-  class="overflow-y-scroll scroll-smooth"
+  class="scroll-smooth"
 >
   <head>
     <meta charset="UTF-8" />
@@ -68,10 +68,6 @@ const rssHref = getRelativeLocaleUrl(
       title={site.title}
       href={new URL(rssHref, Astro.site)}
     />
-
-    <meta name="theme-color" content="" />
-
-    <slot name="head" />
 
     {
       site.googleVerification && (
@@ -116,11 +112,9 @@ const rssHref = getRelativeLocaleUrl(
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <ClientRouter />
+    <slot name="head" />
   </head>
-  <body
-    class="min-h-screen flex flex-col"
-    style="background-color: var(--neu-bg); color: var(--neu-text);"
-  >
+  <body>
     <slot />
     <script>
       import "@/scripts/theme";

@@ -2,10 +2,8 @@
 import { getRelativeLocaleUrl } from "@/i18n/utils";
 import "@pagefind/default-ui/css/ui.css";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import RightSidebar from "@/components/RightSidebar.astro";
 import { getAssetPath } from "@/utils/withBase";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
@@ -27,22 +25,25 @@ const t = useTranslations(locale);
 ---
 
 <Layout title={`${t.pages.searchTitle} | ${config.site.title}`}>
-  <Header />
-
-  <Breadcrumb />
-
-  <Main pageTitle={t.pages.searchTitle} pageDesc={t.pages.searchDesc}>
-    <div
-      id="pagefind-search"
-      transition:persist
-      data-backurl={backUrl}
-      data-bundle-path={pagefindBundlePath}
-      class="neu-card p-6"
-    >
-    </div>
-  </Main>
-
-  <Footer />
+  <div class="layout">
+    <Sidebar />
+    
+    <main class="main-content">
+      <h1>{t.pages.searchTitle}</h1>
+      <p class="text-muted mb-6">{t.pages.searchDesc}</p>
+      
+      <div
+        id="pagefind-search"
+        transition:persist
+        data-backurl={backUrl}
+        data-bundle-path={pagefindBundlePath}
+        class="widget"
+      >
+      </div>
+    </main>
+    
+    <RightSidebar />
+  </div>
 </Layout>
 
 <script>
@@ -65,11 +66,11 @@ const t = useTranslations(locale);
 
       if (import.meta.env.DEV) {
         pageFindSearch.innerHTML = `
-            <div class="neu-inset p-4 mb-4">
+            <div class="p-4 mb-4 bg-[var(--color-bg-secondary)] rounded-lg">
               <p class="mb-2"><strong>DEV mode Warning!</strong> You need to build the project at least once to see the search results during development.</p>
-              <code class="block bg-[var(--neu-shadow-dark)]/30 px-3 py-2 rounded text-sm font-mono">pnpm run build</code>
+              <code class="block bg-[var(--color-bg)] px-3 py-2 rounded text-sm font-mono">npm run build</code>
             </div>
-          `;
+        `;
       }
 
       const search = new PagefindUI({
@@ -119,12 +120,12 @@ const t = useTranslations(locale);
 
 <style is:global>
   #pagefind-search {
-    --pagefind-ui-font: var(--font-app);
-    --pagefind-ui-text: var(--neu-text);
-    --pagefind-ui-background: var(--neu-bg);
-    --pagefind-ui-border: var(--neu-border);
-    --pagefind-ui-primary: var(--neu-accent);
-    --pagefind-ui-tag: var(--neu-bg);
+    --pagefind-ui-font: var(--font-sans);
+    --pagefind-ui-text: var(--color-text);
+    --pagefind-ui-background: var(--color-card);
+    --pagefind-ui-border: var(--color-border);
+    --pagefind-ui-primary: var(--color-primary);
+    --pagefind-ui-tag: var(--color-bg);
     --pagefind-ui-border-radius: 12px;
     --pagefind-ui-border-width: 1px;
     --pagefind-ui-image-border-radius: 8px;
@@ -132,42 +133,49 @@ const t = useTranslations(locale);
   }
 
   #pagefind-search input {
-    background: var(--neu-bg) !important;
-    border: 2px solid var(--neu-border) !important;
-    border-radius: 12px !important;
-    box-shadow: inset 2px 2px 4px var(--neu-shadow-dark),
-                inset -2px -2px 4px var(--neu-shadow-light) !important;
-    padding: 12px 16px !important;
-    font-size: 16px !important;
+    background: var(--color-bg) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    color: var(--color-text) !important;
   }
 
   #pagefind-search input:focus {
-    border-color: var(--neu-accent) !important;
+    border-color: var(--color-primary) !important;
     outline: none !important;
   }
 
   #pagefind-search .pagefind-ui__search-clear {
-    background: var(--neu-bg) !important;
+    background: var(--color-bg) !important;
     border-radius: 50% !important;
-    box-shadow: 2px 2px 4px var(--neu-shadow-dark),
-                -2px -2px 4px var(--neu-shadow-light) !important;
   }
 
   #pagefind-search .pagefind-ui__result {
-    background: var(--neu-bg) !important;
+    background: var(--color-card) !important;
     border-radius: 12px !important;
     padding: 16px !important;
     margin-bottom: 12px !important;
-    box-shadow: 4px 4px 8px var(--neu-shadow-dark),
-                -4px -4px 8px var(--neu-shadow-light) !important;
+    border: 1px solid var(--color-border) !important;
   }
 
   #pagefind-search .pagefind-ui__result-link {
-    color: var(--neu-accent) !important;
+    color: var(--color-primary) !important;
     font-weight: 600 !important;
+    font-size: 1rem !important;
   }
 
   #pagefind-search .pagefind-ui__result-excerpt {
-    color: var(--neu-text-muted) !important;
+    color: var(--color-text-muted) !important;
+    font-size: 0.9rem !important;
+  }
+
+  #pagefind-search .pagefind-ui__tag {
+    background: var(--color-bg) !important;
+    color: var(--color-text-muted) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 9999px !important;
+    padding: 2px 8px !important;
+    font-size: 0.75rem !important;
   }
 </style>

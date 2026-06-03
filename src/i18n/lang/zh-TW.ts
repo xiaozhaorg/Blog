@@ -1,6 +1,9 @@
 import type { UIStrings } from "../types";
 
 export default {
+  site: {
+    title: "小吒の部落格",
+  },
   nav: {
     home: "首頁",
     posts: "文章",

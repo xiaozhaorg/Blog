@@ -2,10 +2,8 @@
 import { getRelativeLocaleUrl } from "@/i18n/utils";
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import RightSidebar from "@/components/RightSidebar.astro";
 import Card from "@/components/Card.astro";
 import { postFilter } from "@/utils/postFilter";
 import { getPostsByGroupCondition } from "./_utils/getPostsByGroupCondition";
@@ -27,64 +25,117 @@ const monthFormatter = new Intl.DateTimeFormat(locale, { month: "long" });
 ---
 
 <Layout title={`${t.pages.archivesTitle} | ${config.site.title}`}>
-  <Header />
-
-  <Breadcrumb />
-
-  <Main pageTitle={t.pages.archivesTitle} pageDesc={t.pages.archivesDesc}>
-    {
-      Object.entries(
-        getPostsByGroupCondition(filteredPosts, post =>
-          post.data.pubDatetime.getFullYear()
+  <div class="layout">
+    <Sidebar />
+    
+    <main class="main-content">
+      <h1>{t.pages.archivesTitle}</h1>
+      <p class="text-muted mb-6">{t.pages.archivesDesc}</p>
+      
+      <div class="archives">
+        {Object.entries(
+          getPostsByGroupCondition(filteredPosts, post =>
+            post.data.pubDatetime.getFullYear()
+          )
         )
-      )
-        .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-        .map(([year, yearGroup]) => (
-          <div class="mb-10">
-            <div class="neu-flat inline-block px-6 py-3 mb-6">
-              <span class="text-2xl font-bold">{year}</span>
-              <sup class="text-[var(--neu-text-muted)] text-sm ml-2">({yearGroup.length})</sup>
-            </div>
-            {Object.entries(
-              getPostsByGroupCondition(
-                yearGroup,
-                post => post.data.pubDatetime.getMonth() + 1
+          .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
+          .map(([year, yearGroup]) => (
+            <div class="archive-year">
+              <div class="year-header">
+                <span class="year-label">{year}</span>
+                <sup class="text-muted">({yearGroup.length})</sup>
+              </div>
+              {Object.entries(
+                getPostsByGroupCondition(
+                  yearGroup,
+                  post => post.data.pubDatetime.getMonth() + 1
+                )
               )
-            )
-              .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
-              .map(([month, monthGroup]) => (
-                <div class="flex flex-col sm:flex-row mb-6">
-                  <div class="neu-inset px-4 py-3 min-w-[140px] text-lg mb-3 sm:mb-0 sm:mr-6">
-                    <span class="font-semibold">
-                      {monthFormatter.format(
-                        new Date(2000, Number(month) - 1, 1)
-                      )}
-                    </span>
-                    <sup class="text-[var(--neu-text-muted)] text-xs ml-2">
-                      {monthGroup.length}
-                    </sup>
+                .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
+                .map(([month, monthGroup]) => (
+                  <div class="archive-month">
+                    <div class="month-header">
+                      <span class="month-label">
+                        {monthFormatter.format(
+                          new Date(2000, Number(month) - 1, 1)
+                        )}
+                      </span>
+                      <sup class="text-muted">{monthGroup.length}</sup>
+                    </div>
+                    <div class="posts">
+                      {monthGroup
+                        .sort(
+                          (a, b) =>
+                            Math.floor(
+                              new Date(b.data.pubDatetime).getTime() / 1000
+                            ) -
+                            Math.floor(
+                              new Date(a.data.pubDatetime).getTime() / 1000
+                            )
+                        )
+                        .map(data => (
+                          <Card {...data} />
+                        ))}
+                    </div>
                   </div>
-                  <ul class="flex-1 grid gap-4 md:grid-cols-2">
-                    {monthGroup
-                      .sort(
-                        (a, b) =>
-                          Math.floor(
-                            new Date(b.data.pubDatetime).getTime() / 1000
-                          ) -
-                          Math.floor(
-                            new Date(a.data.pubDatetime).getTime() / 1000
-                          )
-                      )
-                      .map(data => (
-                        <Card {...data} />
-                      ))}
-                  </ul>
-                </div>
-              ))}
-          </div>
-        ))
-    }
-  </Main>
-
-  <Footer />
+                ))}
+            </div>
+          ))}
+      </div>
+    </main>
+    
+    <RightSidebar />
+  </div>
 </Layout>
+
+<style>
+  .archives {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .archive-year {
+    margin-bottom: 1rem;
+  }
+
+  .year-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-primary);
+  }
+
+  .year-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .archive-month {
+    margin-left: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .month-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-bg-secondary);
+    border-radius: 8px;
+  }
+
+  .month-label {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .text-muted {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+</style>

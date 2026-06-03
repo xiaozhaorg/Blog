@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getUniqueTags } from "@/utils/getUniqueTags";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+
+const posts = await getCollection("posts");
+const recentPosts = getSortedPosts(posts).slice(0, 5);
+const tags = getUniqueTags(posts).slice(0, 10);
+---
+
+<aside class="right-sidebar">
+  <div class="widget search-widget">
+    <div class="search-box">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" placeholder="搜索网站..." />
+    </div>
+  </div>
+
+  <div class="widget">
+    <h3>{t.home.recentPosts}</h3>
+    <ul class="recent-posts">
+      {recentPosts.map((post) => (
+        <li>
+          <a href={`/posts/${post.id}`}>{post.data.title}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="widget">
+    <h3>热门标签</h3>
+    <div class="tags-cloud">
+      {tags.map(({ tag, tagName }) => (
+        <a href={`/tags/${tag}`} class="tag-item">{tagName}</a>
+      ))}
+    </div>
+  </div>
+</aside>

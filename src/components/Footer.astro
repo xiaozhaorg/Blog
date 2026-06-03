@@ -1,31 +1,20 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import Socials from "./Socials.astro";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
 
-type Props = {
-  noMarginTop?: boolean;
-} & HTMLAttributes<"footer">;
-
-const { noMarginTop = false, class: className, ...attrs } = Astro.props;
-
-const t = useTranslations(Astro.currentLocale);
-const currentYear = new Date().getFullYear();
+const locale = config.site.lang;
+const t = useTranslations(locale);
 ---
 
-<footer
-  class:list={["app-layout", { "mt-auto": !noMarginTop }, className]}
-  {...attrs}
->
-  <div
-    class="flex flex-col items-center justify-between border-t border-[var(--neu-border)] py-6 sm:flex-row-reverse sm:py-4"
-  >
-    <Socials />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row text-[var(--neu-text-muted)]">
-      <span>{t.footer.copyright} &#169; {currentYear} {config.site.title}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>{t.footer.allRightsReserved}</span>
-    </div>
+<footer class="footer">
+  <div class="footer-links">
+    <a href="/">{t.nav.home}</a>
+    <a href="/about">{t.nav.about}</a>
+    <a href="/posts">{t.nav.posts}</a>
+    <a href="/archives">{t.nav.archives}</a>
+    <a href="/tags">{t.nav.tags}</a>
   </div>
+  <p>
+    © {new Date().getFullYear()} {t.site.title}. {t.footer.allRightsReserved}
+  </p>
 </footer>

@@ -1,10 +1,8 @@
 ---
 import { getEntry, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
-import Footer from "@/components/Footer.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import RightSidebar from "@/components/RightSidebar.astro";
 import config from "@/config";
 
 const about = await getEntry("pages", "about");
@@ -24,13 +22,20 @@ const { Content } = await render(about);
   ogImage={about.data.ogImage}
   canonicalURL={about.data.canonicalURL}
 >
-  <Header />
-
-  <Breadcrumb />
-
-  <Main pageTitle={about.data.title} class="app-prose">
-    <Content />
-  </Main>
-
-  <Footer />
+  <div class="layout">
+    <Sidebar />
+    
+    <main class="main-content">
+      <article class="post-content">
+        <header class="post-header">
+          <h1>{about.data.title}</h1>
+        </header>
+        <div class="post-body">
+          <Content />
+        </div>
+      </article>
+    </main>
+    
+    <RightSidebar />
+  </div>
 </Layout>
