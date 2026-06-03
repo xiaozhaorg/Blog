@@ -31,10 +31,20 @@ export default {
     socialLinks: "Social Links",
     recentPosts: "Recent Posts",
     allPosts: "All Posts",
+    welcome: "Welcome",
+    description:
+      "Welcome to Xiaozha's Blog, a personal blog sharing technical insights, tinkering experiences, and daily journals. If you have any suggestions, ideas, or resources to share, feel free to contact me via email below.",
+    contact: "Contact me:",
   },
   footer: {
     copyright: "Copyright",
     allRightsReserved: "All rights reserved.",
+  },
+  language: {
+    zh: "简体中文",
+    "zh-TW": "繁體中文",
+    en: "English",
+    switchLang: "Language",
   },
   pages: {
     tagTitle: "Tag",

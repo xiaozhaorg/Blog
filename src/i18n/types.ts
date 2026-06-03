@@ -29,10 +29,19 @@ export interface UIStrings {
     socialLinks: string;
     recentPosts: string;
     allPosts: string;
+    welcome: string;
+    description: string;
+    contact: string;
   };
   footer: {
     copyright: string;
     allRightsReserved: string;
+  };
+  language: {
+    zh: string;
+    "zh-TW": string;
+    en: string;
+    switchLang: string;
   };
   pages: {
     tagTitle: string;

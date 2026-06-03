@@ -10,11 +10,13 @@ import Socials from "@/components/Socials.astro";
 import Card from "@/components/Card.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
+import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 const { socials, posts: postsConfig } = config;
 
 const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
 
 const posts = await getCollection("posts");
 const recentPosts = getSortedPosts(posts);
@@ -27,8 +29,8 @@ const homePath = getRelativeLocaleUrl(locale, "");
     <section id="hero" class="pt-8 pb-6">
       <div class="neu-flat p-8 mb-8">
         <div class="flex items-center gap-4 mb-6">
-          <h1 class="text-4xl font-bold tracking-tight">
-            欢迎
+          <h1 class="text-4xl font-bold tracking-tight" data-i18n="home.welcome">
+            {t.home.welcome}
           </h1>
           <a
             target="_blank"
@@ -41,14 +43,14 @@ const homePath = getRelativeLocaleUrl(locale, "");
           </a>
         </div>
 
-        <p class="text-lg leading-relaxed text-[var(--neu-text-muted)] max-w-2xl">
-          欢迎来到小吒の博客，这是一个分享技术心得、折腾经验和自己日常记录的个人博客。如果你有什么好的建议或者意见，有好点子或者资源分享，都可以通过下方的邮箱联系我。
+        <p class="text-lg leading-relaxed text-[var(--neu-text-muted)] max-w-2xl" data-i18n="home.description">
+          {t.home.description}
         </p>
 
         {
           socials.length > 0 && (
             <div class="mt-6 flex items-center gap-3">
-              <span class="text-sm text-[var(--neu-text-muted)]">联系我：</span>
+              <span class="text-sm text-[var(--neu-text-muted)]" data-i18n="home.contact">{t.home.contact}</span>
               <Socials />
             </div>
           )
@@ -60,7 +62,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
       recentPosts.length > 0 && (
         <section id="recent-posts" class="py-8">
           <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
-            <span class="neu-inset px-4 py-2 text-sm">最新文章</span>
+            <span class="neu-inset px-4 py-2 text-sm" data-i18n="home.recentPosts">{t.home.recentPosts}</span>
           </h2>
           <div class="grid gap-6">
             {recentPosts.slice(0, postsConfig.perIndex).map(data => (
@@ -76,7 +78,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
         href={getRelativeLocaleUrl(locale, "posts")}
         class="neu-button px-8 py-4 text-lg font-medium"
       >
-        View All Posts
+        <span data-i18n="home.allPosts">{t.home.allPosts}</span>
         <IconArrowRight class="inline-block rtl:-rotate-180" />
       </LinkButton>
     </div>

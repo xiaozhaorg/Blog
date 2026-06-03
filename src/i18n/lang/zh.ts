@@ -31,10 +31,20 @@ export default {
     socialLinks: "社交链接",
     recentPosts: "最新文章",
     allPosts: "全部文章",
+    welcome: "欢迎",
+    description:
+      "欢迎来到小吒の博客，这是一个分享技术心得、折腾经验和自己日常记录的个人博客。如果你有什么好的建议或者意见，有好点子或者资源分享，都可以通过下方的邮箱联系我。",
+    contact: "联系我：",
   },
   footer: {
     copyright: "版权所有",
     allRightsReserved: "保留所有权利。",
+  },
+  language: {
+    zh: "简体中文",
+    "zh-TW": "繁體中文",
+    en: "English",
+    switchLang: "切换语言",
   },
   pages: {
     tagTitle: "标签",

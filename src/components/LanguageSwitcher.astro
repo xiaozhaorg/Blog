@@ -1,0 +1,174 @@
+---
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const locale = config.site.lang;
+const t = useTranslations(locale);
+---
+
+<div id="language-switcher" class="relative">
+  <button
+    id="lang-btn"
+    class="neu-button size-8 text-xs font-medium text-[var(--neu-text)]"
+    aria-label={t.language.switchLang}
+    title={t.language.switchLang}
+  >
+    <span id="lang-current" data-i18n={`language.${locale}`}>{t.language[locale as keyof typeof t.language]}</span>
+  </button>
+  <div
+    id="lang-menu"
+    class="absolute right-0 top-full mt-1 hidden min-w-[110px] rounded-lg border border-[var(--neu-border)] bg-[var(--neu-bg)] p-1 shadow-lg"
+  >
+    {["zh", "zh-TW", "en"].map((lang) => (
+      <button
+        class="lang-option block w-full rounded-md px-3 py-1.5 text-left text-sm hover:bg-[var(--neu-surface)] data-[active=true]:bg-[var(--neu-surface)] data-[active=true]:font-medium text-[var(--neu-text)]"
+        data-lang={lang}
+        data-active={lang === locale ? "true" : "false"}
+      >
+        {t.language[lang as keyof typeof t.language]}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    // ── Load all translations ─────────────────────────────
+    var translations = {};
+    var langModules = import.meta.glob("/src/i18n/lang/*.ts", { eager: true });
+    for (var _path in langModules) {
+      if (Object.prototype.hasOwnProperty.call(langModules, _path)) {
+        var localeName = _path.replace(/^.*\/lang\//, "").replace(/\.ts$/, "");
+        translations[localeName] = langModules[_path].default;
+      }
+    }
+
+    function resolveKey(obj, key) {
+      return key.split(".").reduce(function (acc, part) {
+        if (acc && typeof acc === "object") return acc[part];
+        return undefined;
+      }, obj) ?? "";
+    }
+
+    function applyLocale(locale) {
+      var t = translations[locale] || translations["zh"];
+      if (!t) return;
+
+      // Update data-i18n elements
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        var key = el.dataset.i18n;
+        var val = resolveKey(t, key);
+        if (val) el.textContent = val;
+      });
+
+      // Update current language label
+      var currentLabel = document.getElementById("lang-current");
+      if (currentLabel) {
+        var key = currentLabel.dataset.i18n;
+        if (key) {
+          var val = resolveKey(t, key);
+          if (val) currentLabel.textContent = val;
+        }
+      }
+
+      // Mark active option
+      document.querySelectorAll(".lang-option").forEach(function (btn) {
+        var isActive = btn.dataset.lang === locale;
+        btn.dataset.active = isActive ? "true" : "false";
+      });
+
+      // Update nav items (rendered by Header.astro with data-i18n-nav attributes)
+      document.querySelectorAll("[data-i18n-nav]").forEach(function (el) {
+        var key = el.dataset.i18nNav;
+        var val = resolveKey(t, key);
+        if (val) el.textContent = val;
+      });
+
+      // Update skip-to-content link
+      var skipLink = document.getElementById("skip-to-content");
+      if (skipLink) {
+        var val = resolveKey(t, "a11y.skipToContent");
+        if (val) skipLink.textContent = val;
+      }
+
+      // Update theme button title
+      var themeBtn = document.getElementById("theme-btn");
+      if (themeBtn) {
+        var val = resolveKey(t, "a11y.toggleTheme");
+        if (val) themeBtn.title = val;
+      }
+
+      // Update menu button labels
+      var menuBtn = document.getElementById("menu-btn");
+      if (menuBtn) {
+        var openLabel = resolveKey(t, "a11y.openMenu");
+        var closeLabel = resolveKey(t, "a11y.closeMenu");
+        if (openLabel) menuBtn.dataset.labelOpen = openLabel;
+        if (closeLabel) menuBtn.dataset.labelClose = closeLabel;
+        var expanded = menuBtn.getAttribute("aria-expanded");
+        if (expanded === "false" || !expanded) {
+          menuBtn.setAttribute("aria-label", openLabel);
+        } else {
+          menuBtn.setAttribute("aria-label", closeLabel);
+        }
+      }
+
+      // Update archive/search button titles
+      document.querySelectorAll("[data-i18n-title]").forEach(function (el) {
+        var key = el.dataset.i18nTitle;
+        var val = resolveKey(t, key);
+        if (val) el.title = val;
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+        var key = el.dataset.i18nAria;
+        var val = resolveKey(t, key);
+        if (val) el.setAttribute("aria-label", val);
+      });
+
+      localStorage.setItem("locale", locale);
+    }
+
+    // ── Toggle language dropdown menu ─────────────────────
+    document.addEventListener("DOMContentLoaded", function () {
+      var container = document.getElementById("language-switcher");
+      var btn = document.getElementById("lang-btn");
+      var menu = document.getElementById("lang-menu");
+
+      if (container && btn && menu) {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          menu.classList.toggle("hidden");
+        });
+
+        document.addEventListener("click", function () {
+          menu.classList.add("hidden");
+        });
+        menu.addEventListener("click", function (e) {
+          e.stopPropagation();
+        });
+
+        menu.addEventListener("click", function (e) {
+          var target = e.target.closest(".lang-option");
+          if (target && target.dataset.lang) {
+            applyLocale(target.dataset.lang);
+            menu.classList.add("hidden");
+          }
+        });
+      }
+
+      // ── Apply saved locale on page load ─────────────────
+      var saved = localStorage.getItem("locale");
+      if (saved && saved !== "zh") {
+        applyLocale(saved);
+      }
+    });
+
+    // Re-apply after Astro page transitions
+    document.addEventListener("astro:after-swap", function () {
+      var saved = localStorage.getItem("locale");
+      if (saved && saved !== "zh") {
+        applyLocale(saved);
+      }
+    });
+  })();
+</script>

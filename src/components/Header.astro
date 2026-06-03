@@ -7,6 +7,7 @@ import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconX from "@/assets/icons/IconX.svg";
 import LinkButton from "./LinkButton.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 import { stripBase } from "@/utils/withBase";
 import { useTranslations } from "@/i18n";
 import { getRelativeLocaleUrl } from "@/i18n/utils";
@@ -74,6 +75,7 @@ const isActive = (path: string) => {
           <a
             href={getRelativeLocaleUrl(locale, "posts")}
             class:list={{ "active-nav": isActive("/posts") }}
+            data-i18n-nav="nav.posts"
           >
             {t.nav.posts}
           </a>
@@ -82,6 +84,7 @@ const isActive = (path: string) => {
           <a
             href={getRelativeLocaleUrl(locale, "tags")}
             class:list={{ "active-nav": isActive("/tags") }}
+            data-i18n-nav="nav.tags"
           >
             {t.nav.tags}
           </a>
@@ -90,6 +93,7 @@ const isActive = (path: string) => {
           <a
             href={getRelativeLocaleUrl(locale, "about")}
             class:list={{ "active-nav": isActive("/about") }}
+            data-i18n-nav="nav.about"
           >
             {t.nav.about}
           </a>
@@ -105,6 +109,8 @@ const isActive = (path: string) => {
                 ]}
                 title={t.nav.archives}
                 aria-label={t.nav.archives}
+                data-i18n-title="nav.archives"
+                data-i18n-aria="nav.archives"
               >
                 <IconArchive class="hidden sm:absolute sm:top-1/2 sm:left-1/2 sm:block sm:size-6 sm:-translate-x-1/2 sm:-translate-y-1/2" />
                 <span class="sm:sr-only">{t.nav.archives}</span>
@@ -126,6 +132,8 @@ const isActive = (path: string) => {
                 class:list={["relative size-8"]}
                 title={t.nav.search}
                 aria-label={t.nav.search}
+                data-i18n-title="nav.search"
+                data-i18n-aria="nav.search"
               >
                 <IconSearch class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" />
                 <span class="sr-only">{t.nav.search}</span>
@@ -155,6 +163,9 @@ const isActive = (path: string) => {
             </li>
           )
         }
+        <li class="col-span-2 flex items-center justify-center sm:col-span-1">
+          <LanguageSwitcher />
+        </li>
       </ul>
     </nav>
   </div>
