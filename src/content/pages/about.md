@@ -11,7 +11,7 @@ description: "关于小吒の博客和我"
 
 ## 关于博客
 
-这个博客使用 [Astro](https://astro.build/) 构建，采用 Neumorphic 设计风格，支持明暗模式切换。
+这个博客使用 <a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> 构建，采用 Neumorphic 设计风格，支持明暗模式切换。
 
 ### 主要内容
 
@@ -21,7 +21,7 @@ description: "关于小吒の博客和我"
 
 ## 联系方式
 
-- 邮箱：<a href="#" onclick="window.location.href='mailto:mail@xiaozha.org';return false;">mail@xiaozha.org</a>
+- 邮箱：<a href="mailto:mail@xiaozha.org" class="email-link">mail@xiaozha.org</a>
 - 博客：https://xiaozha.org
 
 如果你有任何问题或建议，欢迎留言交流！

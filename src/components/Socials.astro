@@ -30,7 +30,7 @@ const items = await Promise.all(
           href={url}
           class="p-2.5 hover:text-[var(--neu-accent)]"
           title={title}
-          target="_blank"
+          target={url.startsWith("mailto:") ? undefined : "_blank"}
           rel="noopener noreferrer"
         >
           <Icon class="inline-block size-5 fill-transparent stroke-current stroke-2 opacity-80" />
