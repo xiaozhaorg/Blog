@@ -1,17 +1,17 @@
 // Load all translation modules via Vite's import.meta.glob
-const langModules = import.meta.glob("/src/i18n/lang/*.ts", { eager: true });
+var langModules = import.meta.glob("/src/i18n/lang/*.ts", { eager: true });
 
-const translations = {};
-for (const path in langModules) {
-  if (Object.prototype.hasOwnProperty.call(langModules, path)) {
-    const locale = path.replace(/^.*\/lang\//, "").replace(/\.ts$/, "");
-    translations[locale] = langModules[path].default;
+var translations = {};
+for (var _path in langModules) {
+  if (Object.prototype.hasOwnProperty.call(langModules, _path)) {
+    var locale = _path.replace(/^.*\/lang\//, "").replace(/\.ts$/, "");
+    translations[locale] = langModules[_path].default;
   }
 }
 
-// Map our locale codes to Google Translate language codes
-var GT_LANG_MAP = {
-  zh: "zh-CN",
+// Google Translate language -> our locale mapping
+var GT_REVERSE = {
+  "zh-CN": "zh",
   "zh-TW": "zh-TW",
   en: "en",
 };
@@ -23,54 +23,27 @@ function resolveKey(obj, key) {
   }, obj) ?? "";
 }
 
-function triggerGoogleTranslate(targetLang) {
-  // Wait for Google Translate iframe to be ready
-  var maxAttempts = 20;
-  var attempt = 0;
-
-  function tryTranslate() {
-    var select = document.querySelector(".goog-te-combo");
-    if (select) {
-      select.value = targetLang;
-      select.dispatchEvent(new Event("change"));
-      return true;
-    }
-    return false;
-  }
-
-  // Try immediately
-  if (!tryTranslate()) {
-    // Retry a few times with interval
-    var interval = setInterval(function () {
-      attempt++;
-      if (tryTranslate() || attempt >= maxAttempts) {
-        clearInterval(interval);
-      }
-    }, 500);
-  }
+// ── Google Translate cookie management ──────────────────
+function getGTCookie() {
+  var match = document.cookie.match(/googtrans=\/zh-CN\/([^;]+)/);
+  return match ? match[1] : null;
 }
 
-function revertGoogleTranslate() {
-  // Restore original language by setting zh-CN
-  triggerGoogleTranslate("zh-CN");
-
-  // Remove the Google Translate overlay styles
-  var topFrame = document.querySelector(".goog-te-banner-frame");
-  if (topFrame) topFrame.style.display = "none";
-
-  var body = document.body;
-  body.style.top = "0";
-  body.style.position = "static";
-
-  // Restore any modified HTML attributes
-  document.documentElement.lang = "zh";
+function setGTCookie(gtLang) {
+  var d = new Date();
+  d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+  document.cookie = "googtrans=/zh-CN/" + gtLang + "; path=/; expires=" + d.toUTCString();
 }
 
+function clearGTCookie() {
+  document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+}
+
+// ── Apply UI text ──────────────────────────────────────
 function applyLocale(locale) {
   var t = translations[locale] || translations["zh"];
   if (!t) return;
 
-  // ── UI translation (nav, buttons, etc.) ────────────────
   document.querySelectorAll("[data-i18n]").forEach(function (el) {
     var key = el.dataset.i18n;
     var val = resolveKey(t, key);
@@ -78,8 +51,7 @@ function applyLocale(locale) {
   });
 
   document.querySelectorAll(".lang-option").forEach(function (btn) {
-    var isActive = btn.dataset.lang === locale;
-    btn.dataset.active = isActive ? "true" : "false";
+    btn.dataset.active = btn.dataset.lang === locale ? "true" : "false";
   });
 
   document.querySelectorAll("[data-i18n-nav]").forEach(function (el) {
@@ -121,53 +93,62 @@ function applyLocale(locale) {
     if (val) el.setAttribute("aria-label", val);
   });
 
-  // Update the current language label on the button
   var currentLabel = document.getElementById("lang-current");
   if (currentLabel) {
     var langLabel = resolveKey(t, "language." + locale);
     if (langLabel) currentLabel.textContent = langLabel;
   }
 
-  // ── Page content translation via Google Translate ──────
-  // Only translate when Google Translate API is loaded
-  if (typeof google !== "undefined" && google.translate) {
-    var gtLang = GT_LANG_MAP[locale];
-    if (gtLang === "zh-CN") {
-      // Revert to original
-      revertGoogleTranslate();
-    } else {
-      // Translate page content to target language
-      triggerGoogleTranslate(gtLang);
-    }
-  }
-
   localStorage.setItem("locale", locale);
 }
 
-// ── Event delegation on document level ──────────────────────
+// ── Switch language (set cookie + reload) ──────────────
+function switchLocale(locale) {
+  // Apply UI immediately (visible before reload)
+  applyLocale(locale);
 
+  if (locale === "zh") {
+    clearGTCookie();
+  } else {
+    setGTCookie(GT_REVERSE[locale] || locale);
+  }
+
+  // Reload to let Google Translate handle content translation
+  window.location.reload();
+}
+
+// ── Restore UI state from cookie on load ───────────────
+function restoreFromCookie() {
+  var gtLang = getGTCookie();
+  var locale = gtLang ? GT_REVERSE[gtLang] || "zh" : "zh";
+  var savedLocale = localStorage.getItem("locale");
+
+  if (locale !== "zh") {
+    applyLocale(locale);
+    if (savedLocale !== locale) {
+      localStorage.setItem("locale", locale);
+    }
+  }
+}
+
+// ── Event delegation ──────────────────────────────────
 document.addEventListener("click", function (e) {
-  // Toggle menu: click on #lang-btn or its child
   var btn = e.target.closest("#lang-btn");
   if (btn) {
     var menu = document.getElementById("lang-menu");
-    if (menu) {
-      menu.classList.toggle("hidden");
-    }
+    if (menu) menu.classList.toggle("hidden");
     return;
   }
 
-  // Select language: click on .lang-option
   var option = e.target.closest(".lang-option");
   if (option && option.dataset.lang) {
-    applyLocale(option.dataset.lang);
+    switchLocale(option.dataset.lang);
     var menu = document.getElementById("lang-menu");
     if (menu) menu.classList.add("hidden");
     return;
   }
 });
 
-// Close menu when clicking anywhere else
 document.addEventListener("click", function (e) {
   var container = document.getElementById("language-switcher");
   if (container && !container.contains(e.target)) {
@@ -176,20 +157,12 @@ document.addEventListener("click", function (e) {
   }
 });
 
-// ── Initialize & re-initialize on page load/navigation ─────
-
-function restoreLocale() {
-  var saved = localStorage.getItem("locale");
-  if (saved && saved !== "zh") {
-    applyLocale(saved);
-  }
-}
-
+// ── Initialize ────────────────────────────────────────
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", restoreLocale);
+  document.addEventListener("DOMContentLoaded", restoreFromCookie);
 } else {
-  restoreLocale();
+  restoreFromCookie();
 }
 
-// Re-apply after Astro page transitions (ClientRouter)
-document.addEventListener("astro:after-swap", restoreLocale);
+// Restore on Astro page transitions (without reload)
+document.addEventListener("astro:after-swap", restoreFromCookie);
