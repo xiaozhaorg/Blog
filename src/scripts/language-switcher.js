@@ -70,34 +70,52 @@ function applyLocale(locale) {
     if (val) el.setAttribute("aria-label", val);
   });
 
+  // Update the current language label on the button
+  var currentLabel = document.getElementById("lang-current");
+  if (currentLabel) {
+    var langLabel = resolveKey(t, "language." + locale);
+    if (langLabel) currentLabel.textContent = langLabel;
+  }
+
   localStorage.setItem("locale", locale);
 }
 
-function init() {
-  var container = document.getElementById("language-switcher");
-  var btn = document.getElementById("lang-btn");
-  var menu = document.getElementById("lang-menu");
+// ── Event delegation on document level ──────────────────────
+// This survives page navigation because `document` never gets replaced.
 
-  if (container && btn && menu) {
-    btn.addEventListener("click", function (e) {
-      e.stopPropagation();
+document.addEventListener("click", function (e) {
+  // Toggle menu: click on #lang-btn or its child
+  var btn = e.target.closest("#lang-btn");
+  if (btn) {
+    var menu = document.getElementById("lang-menu");
+    if (menu) {
       menu.classList.toggle("hidden");
-    });
-
-    document.addEventListener("click", function () {
-      if (menu) menu.classList.add("hidden");
-    });
-
-    menu.addEventListener("click", function (e) {
-      e.stopPropagation();
-      var target = e.target && e.target.closest ? e.target.closest(".lang-option") : null;
-      if (target && target.dataset.lang) {
-        applyLocale(target.dataset.lang);
-        if (menu) menu.classList.add("hidden");
-      }
-    });
+    }
+    return;
   }
 
+  // Select language: click on .lang-option
+  var option = e.target.closest(".lang-option");
+  if (option && option.dataset.lang) {
+    applyLocale(option.dataset.lang);
+    var menu = document.getElementById("lang-menu");
+    if (menu) menu.classList.add("hidden");
+    return;
+  }
+});
+
+// Close menu when clicking anywhere else
+document.addEventListener("click", function (e) {
+  var container = document.getElementById("language-switcher");
+  if (container && !container.contains(e.target)) {
+    var menu = document.getElementById("lang-menu");
+    if (menu) menu.classList.add("hidden");
+  }
+});
+
+// ── Initialize & re-initialize on page load/navigation ─────
+
+function restoreLocale() {
   var saved = localStorage.getItem("locale");
   if (saved && saved !== "zh") {
     applyLocale(saved);
@@ -105,14 +123,10 @@ function init() {
 }
 
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("DOMContentLoaded", restoreLocale);
 } else {
-  init();
+  restoreLocale();
 }
 
-document.addEventListener("astro:after-swap", function () {
-  var saved = localStorage.getItem("locale");
-  if (saved && saved !== "zh") {
-    applyLocale(saved);
-  }
-});
+// Re-apply after Astro page transitions (ClientRouter)
+document.addEventListener("astro:after-swap", restoreLocale);
