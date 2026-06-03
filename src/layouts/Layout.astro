@@ -114,7 +114,14 @@ const rssHref = getRelativeLocaleUrl(
     <ClientRouter />
     <slot name="head" />
   </head>
+<<<<<<< HEAD
   <body>
+=======
+  <body
+    class="min-h-screen flex flex-col"
+    style="background-color: var(--neu-bg); color: var(--neu-text);"
+  >
+>>>>>>> 9d8d152 (修复: 文章内容翻译改用 cookie+reload 方式, 确保100%可靠触发 Google Translate)
     <slot />
     <script>
       import "@/scripts/theme";
