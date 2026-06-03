@@ -9,6 +9,13 @@ for (const path in langModules) {
   }
 }
 
+// Map our locale codes to Google Translate language codes
+var GT_LANG_MAP = {
+  zh: "zh-CN",
+  "zh-TW": "zh-TW",
+  en: "en",
+};
+
 function resolveKey(obj, key) {
   return key.split(".").reduce(function (acc, part) {
     if (acc && typeof acc === "object") return acc[part];
@@ -16,10 +23,54 @@ function resolveKey(obj, key) {
   }, obj) ?? "";
 }
 
+function triggerGoogleTranslate(targetLang) {
+  // Wait for Google Translate iframe to be ready
+  var maxAttempts = 20;
+  var attempt = 0;
+
+  function tryTranslate() {
+    var select = document.querySelector(".goog-te-combo");
+    if (select) {
+      select.value = targetLang;
+      select.dispatchEvent(new Event("change"));
+      return true;
+    }
+    return false;
+  }
+
+  // Try immediately
+  if (!tryTranslate()) {
+    // Retry a few times with interval
+    var interval = setInterval(function () {
+      attempt++;
+      if (tryTranslate() || attempt >= maxAttempts) {
+        clearInterval(interval);
+      }
+    }, 500);
+  }
+}
+
+function revertGoogleTranslate() {
+  // Restore original language by setting zh-CN
+  triggerGoogleTranslate("zh-CN");
+
+  // Remove the Google Translate overlay styles
+  var topFrame = document.querySelector(".goog-te-banner-frame");
+  if (topFrame) topFrame.style.display = "none";
+
+  var body = document.body;
+  body.style.top = "0";
+  body.style.position = "static";
+
+  // Restore any modified HTML attributes
+  document.documentElement.lang = "zh";
+}
+
 function applyLocale(locale) {
   var t = translations[locale] || translations["zh"];
   if (!t) return;
 
+  // ── UI translation (nav, buttons, etc.) ────────────────
   document.querySelectorAll("[data-i18n]").forEach(function (el) {
     var key = el.dataset.i18n;
     var val = resolveKey(t, key);
@@ -77,11 +128,23 @@ function applyLocale(locale) {
     if (langLabel) currentLabel.textContent = langLabel;
   }
 
+  // ── Page content translation via Google Translate ──────
+  // Only translate when Google Translate API is loaded
+  if (typeof google !== "undefined" && google.translate) {
+    var gtLang = GT_LANG_MAP[locale];
+    if (gtLang === "zh-CN") {
+      // Revert to original
+      revertGoogleTranslate();
+    } else {
+      // Translate page content to target language
+      triggerGoogleTranslate(gtLang);
+    }
+  }
+
   localStorage.setItem("locale", locale);
 }
 
 // ── Event delegation on document level ──────────────────────
-// This survives page navigation because `document` never gets replaced.
 
 document.addEventListener("click", function (e) {
   // Toggle menu: click on #lang-btn or its child

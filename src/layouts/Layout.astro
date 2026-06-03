@@ -98,12 +98,27 @@ const rssHref = getRelativeLocaleUrl(
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8462449606343172"
       crossorigin="anonymous"></script>
 
+    <!-- Google Translate (hidden, for page content translation) -->
+    <script is:inline>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: "zh-CN",
+          includedLanguages: "en,zh-CN,zh-TW",
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false
+        }, "google_translate_element");
+      }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <ClientRouter />
   </head>
   <body
     class="min-h-screen flex flex-col"
     style="background-color: var(--neu-bg); color: var(--neu-text);"
   >
+    <!-- Hidden Google Translate element -->
+    <div id="google_translate_element" style="display:none"></div>
     <slot />
     <script>
       import "@/scripts/theme";
