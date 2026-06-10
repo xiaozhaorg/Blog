@@ -134,33 +134,57 @@
       width: 100%;
       border-collapse: collapse;
       margin: 2rem 0;
-      border: 2px solid var(--color-border);
+      border: 2px solid #d1d5db;
       border-radius: 8px;
       overflow: hidden;
-      background-color: var(--color-bg);
+      background-color: #ffffff;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
+    html[data-theme="dark"] table {
+      border-color: #374151;
+      background-color: #1f2937;
+    }
+
     table thead {
-      background-color: color-mix(in srgb, var(--color-primary) 10%, var(--color-bg));
+      background-color: #f3f4f6;
+    }
+
+    html[data-theme="dark"] table thead {
+      background-color: #374151;
     }
 
     table th,
     table td {
-      border: 1px solid var(--color-border);
+      border: 1px solid #d1d5db;
       padding: 0.75rem 1rem;
       text-align: left;
       vertical-align: middle;
     }
 
+    html[data-theme="dark"] table th,
+    html[data-theme="dark"] table td {
+      border-color: #374151;
+      color: #f9fafb;
+    }
+
     table th {
       font-weight: 600;
-      color: var(--color-text);
-      border-bottom: 2px solid var(--color-border);
+      color: #1f2937;
+      border-bottom: 2px solid #d1d5db;
+    }
+
+    html[data-theme="dark"] table th {
+      color: #f9fafb;
+      border-bottom-color: #4b5563;
     }
 
     table tbody tr {
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    html[data-theme="dark"] table tbody tr {
+      border-bottom-color: #374151;
     }
 
     table tbody tr:last-child {
@@ -168,11 +192,15 @@
     }
 
     table tbody tr:hover {
-      background-color: color-mix(in srgb, var(--color-primary) 5%, var(--color-bg));
+      background-color: #f9fafb;
+    }
+
+    html[data-theme="dark"] table tbody tr:hover {
+      background-color: #374151;
     }
 
     table td {
-      color: var(--color-text);
+      color: #374151;
     }
 
     code {
