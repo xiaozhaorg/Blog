@@ -75,6 +75,7 @@
       margin-top: 1rem;
       margin-bottom: 1rem;
       padding-left: 1.5rem;
+      list-style: revert;
     }
 
     ul {
@@ -89,10 +90,16 @@
       margin-top: 0.5rem;
       margin-bottom: 0.5rem;
       line-height: 1.75;
+      border: none !important;
     }
 
     li::marker {
       color: var(--color-primary);
+    }
+
+    ul li,
+    ol li {
+      border-bottom: none !important;
     }
 
     hr {
