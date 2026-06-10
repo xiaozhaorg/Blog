@@ -93,20 +93,34 @@
     }
 
     table {
+      width: 100%;
+      border-collapse: collapse;
       border-radius: 20px;
       overflow: hidden;
+      margin: 1.5rem 0;
+      border: 1px solid var(--neu-border);
     }
 
     table th,
     table td {
       border: 1px solid var(--neu-border);
-      padding: 0.75rem;
+      padding: 0.75rem 1rem;
+      text-align: left;
     }
 
     table th {
-      padding-top: 0.625rem;
-      padding-bottom: 0.625rem;
+      padding-top: 0.875rem;
+      padding-bottom: 0.875rem;
       font-weight: 600;
+      background-color: color-mix(in srgb, var(--neu-shadow-dark) 15%, transparent);
+    }
+
+    table tr {
+      border-bottom: 1px solid var(--neu-border);
+    }
+
+    table tr:last-child {
+      border-bottom: none;
     }
 
     table tr:hover td {
