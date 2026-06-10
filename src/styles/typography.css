@@ -274,20 +274,21 @@
     outline-color: var(--color-border);
     display: flex;
     border: 1px solid var(--color-border);
-    background: var(--shiki-light-bg);
-    color: var(--shiki-light);
+    background: #f8fafc;
+    color: #1e293b;
   }
 
   .astro-code span {
-    color: var(--shiki-light);
+    color: #1e293b;
   }
 
   html[data-theme="dark"] .astro-code {
-    background: var(--shiki-dark-bg);
-    color: var(--shiki-dark);
+    background: #1e293b;
+    color: #e2e8f0;
+    border-color: #334155;
   }
 
   html[data-theme="dark"] .astro-code span {
-    color: var(--shiki-dark);
+    color: #e2e8f0;
   }
 }
