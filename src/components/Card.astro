@@ -1,14 +1,10 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getPostUrl } from "@/utils/getPostPaths";
-import Datetime from "./Datetime.astro";
-import Tag from "./Tag.astro";
 
-type Props = {
-  variant?: "h2" | "h3";
-} & CollectionEntry<"posts">;
+type Props = CollectionEntry<"posts">;
 
-const { variant: Heading = "h2", id, data, filePath } = Astro.props;
+const { id, data, filePath } = Astro.props;
 
 const { title, description, tags, pubDatetime } = data;
 
