@@ -62,7 +62,12 @@
     color: var(--color-primary-dark);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 600;
     line-height: 1.25;
     margin-bottom: 0.5em;
@@ -215,6 +220,22 @@
     background-color: var(--color-bg);
     color: var(--color-text);
     border-color: var(--color-primary);
+  }
+
+  .sidebar-btn .sun-icon {
+    display: block;
+  }
+
+  .sidebar-btn .moon-icon {
+    display: none;
+  }
+
+  [data-theme="dark"] .sidebar-btn .sun-icon {
+    display: none;
+  }
+
+  [data-theme="dark"] .sidebar-btn .moon-icon {
+    display: block;
   }
 
   .main-content {
@@ -505,7 +526,6 @@
   .post-body pre code {
     background: none;
     padding: 0;
-    color: var(--color-text);
   }
 
   .post-body blockquote {
