@@ -15,6 +15,29 @@ const recentPosts = getSortedPosts(posts);
 ---
 
 <Layout>
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        name: config.site.title,
+        description: config.site.description,
+        url: config.site.url,
+        author: {
+          "@type": "Person",
+          name: config.site.author,
+          ...(config.site.profile && { url: config.site.profile }),
+        },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${config.site.url}search?q={search_term_string}`,
+          "query-input": "required name=search_term_string",
+        },
+      })}
+    />
+  </Fragment>
   <div class="layout">
     <Sidebar />
     

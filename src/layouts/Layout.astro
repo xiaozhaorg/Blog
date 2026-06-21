@@ -48,6 +48,9 @@ const rssHref = getRelativeLocaleUrl(
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content={site.author} />
+    {site.keywords.length > 0 && (
+      <meta name="keywords" content={site.keywords.join(", ")} />
+    )}
     <link rel="sitemap" href={getAssetPath("sitemap-index.xml")} />
 
     <meta property="og:type" content="website" />

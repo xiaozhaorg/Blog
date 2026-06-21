@@ -47,7 +47,32 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
     }`
   );
 }
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: t.nav.home,
+      item: config.site.url,
+    },
+    ...breadcrumbList.map((breadcrumb, index) => ({
+      "@type": "ListItem",
+      position: index + 2,
+      name: navLabels[breadcrumb] ?? decodeSegment(breadcrumb),
+      item: `${config.site.url}${getRelativeLocaleUrl(locale, breadcrumb)}`,
+    })),
+  ],
+};
 ---
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(structuredData)}
+/>
 
 <nav class="app-layout mt-8 mb-1" aria-label="breadcrumb">
   <div class="neu-inset px-4 py-2 inline-block">

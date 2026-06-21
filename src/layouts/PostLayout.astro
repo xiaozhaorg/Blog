@@ -9,11 +9,12 @@ type Props = {
   canonicalURL?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
+  tags?: string[];
 };
 
 const { site } = config;
 
-const { title, description, ogImage, canonicalURL, pubDatetime, modDatetime } =
+const { title, description, ogImage, canonicalURL, pubDatetime, modDatetime, tags } =
   Astro.props;
 
 const structuredData = {
@@ -23,6 +24,10 @@ const structuredData = {
   image: ogImage,
   ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
+  ...(tags && tags.length > 0 && {
+    keywords: tags.join(", "),
+    category: tags[0],
+  }),
   author: [
     {
       "@type": "Person",

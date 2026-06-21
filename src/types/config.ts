@@ -5,6 +5,8 @@ interface SiteConfig {
   title: string;
   /** Short description used in SEO meta and RSS feed */
   description: string;
+  /** Site keywords used in SEO meta */
+  keywords?: string[];
   /** Default post author name */
   author: string;
   /** Author profile URL (used in structured data) */
@@ -115,6 +117,7 @@ type ResolvedSiteConfig = Required<
     | "timezone"
     | "dir"
     | "ogImage"
+    | "keywords"
   >
 > &
   Pick<SiteConfig, "profile" | "googleVerification" | "googleAdsense">;
