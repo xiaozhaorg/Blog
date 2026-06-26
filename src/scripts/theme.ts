@@ -32,12 +32,15 @@ function reflect(): void {
     ?.setAttribute("content", bg);
 }
 
+function toggleTheme(): void {
+  themeValue = themeValue === LIGHT ? DARK : LIGHT;
+  persist();
+}
+
 function setup(): void {
   reflect();
-  document.querySelector("#theme-btn")?.addEventListener("click", () => {
-    themeValue = themeValue === LIGHT ? DARK : LIGHT;
-    persist();
-  });
+  document.querySelector("#theme-btn")?.addEventListener("click", toggleTheme);
+  document.querySelector("#theme-toggle")?.addEventListener("click", toggleTheme);
 }
 
 setup();
