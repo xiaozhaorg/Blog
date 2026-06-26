@@ -8,7 +8,7 @@ export default defineAstroPaperConfig({
     keywords: ["技术博客", "AI工具", "云计算", "编程开发", "Gemini", "Cloudflare", "NextChat", "个人博客"],
     author: "小吒",
     profile: "https://xiaozha.org",
-    ogImage: "default-og.jpg",
+    ogImage: "default-og.webp",
     lang: "zh",
     timezone: "Asia/Shanghai",
     dir: "ltr",

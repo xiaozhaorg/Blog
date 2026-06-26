@@ -44,6 +44,9 @@ const rssHref = getRelativeLocaleUrl(
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
@@ -94,26 +97,8 @@ const rssHref = getRelativeLocaleUrl(
       })();
     </script>
 
-    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8462449606343172"
-      crossorigin="anonymous"></script>
-
-    <!-- Google Translate - 文章内容翻译 -->
-    <style>
-      .goog-te-banner-frame { display: none !important; }
-      .skiptranslate.goog-te-gadget { display: none !important; }
-      body { top: 0 !important; position: static !important; }
-    </style>
-    <script is:inline>
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: "zh-CN",
-          includedLanguages: "en,zh-CN,zh-TW",
-          autoDisplay: false
-        });
-      }
-    </script>
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      crossorigin="anonymous" is:inline></script>
 
     <ClientRouter />
     <slot name="head" />

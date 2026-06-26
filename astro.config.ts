@@ -5,6 +5,7 @@ import {
 } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import compress from "astro-compress";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
 import rehypeSlug from "rehype-slug";
@@ -23,6 +24,18 @@ export default defineConfig({
     sitemap({
       filter: page =>
         config.features?.showArchives !== false || !page.endsWith("/archives/"),
+    }),
+    compress({
+      CSS: true,
+      HTML: true,
+      Image: {
+        sharp: {
+          webp: { quality: 80 },
+          jpeg: { quality: 80 },
+          png: { quality: 80 },
+        },
+      },
+      JavaScript: true,
     }),
   ],
   i18n: {
@@ -52,6 +65,10 @@ export default defineConfig({
       alias: {
         "@": "/src",
       },
+    },
+    build: {
+      minify: "terser",
+      target: ["es2020"],
     },
   },
   env: {
