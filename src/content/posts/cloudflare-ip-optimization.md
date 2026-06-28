@@ -1,418 +1,373 @@
 ---
-title: "Cloudflare 优选 IP 终极方案：零成本三网分线路解析，彻底解决国内访问慢"
-pubDatetime: 2026-06-26T12:00:00Z
+title: "Cloudflare 网站加速实战：本地测速 + DNS 优选 IP 方案"
+pubDatetime: 2026-06-26T14:00:00Z
 slug: cloudflare-ip-optimization
 featured: true
 draft: false
-tags: ["Cloudflare", "CDN优化", "教程", "排错"]
-description: 采用 GitHub Actions + CloudflareSpeedTest + DNSPod 实现三网分线路优选，彻底避开 Workers 测速失真的坑，电信/联通/移动用户自动命中最优节点。
+tags: ["Cloudflare", "CDN优化", "教程"]
+description: 一套真正可用的 Cloudflare 优选 IP 加速方案，在自己电脑上测速获取真实延迟，通过 DNS 解析让所有访客受益。
 ---
 
 ## 前言
 
-Cloudflare 作为全球最大的 CDN 服务商之一，提供了强大的边缘计算能力。但在中国大陆地区，由于网络环境复杂，直接访问 Cloudflare 的速度往往不尽如人意。
+Cloudflare 是全球最大的免费 CDN 服务商，但在中国大陆访问时经常遇到高延迟、丢包的问题。网上流传的很多"优选 IP"方案要么测速不准（海外测速），要么配置复杂难以实施。
 
-**重要更新**：之前基于 Cloudflare Workers 的自动优选方案存在致命缺陷——Workers 运行在海外边缘节点，从海外测出的延迟对国内访客毫无参考价值。本文已全面升级为**GitHub Actions + CloudflareSpeedTest + DNSPod**方案，彻底解决测速失真问题。
+本文分享一套**真正可用、简单易行**的加速方案：在自己电脑上测速获取真实延迟，然后通过 DNS 解析让所有访客受益。
 
-## 旧方案的致命缺陷
+## 为什么需要优选 IP
 
-### 问题根源
+Cloudflare 使用 Anycast 技术，理论上会自动连接最近的节点。但实际情况是：
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  旧方案：Cloudflare Workers 测速                          │
-│  Workers 运行在海外节点（如美国、日本）                     │
-│  从海外测试 CF IP 延迟 → 结果与国内实际延迟完全不符           │
-└─────────────────────────────────────────────────────────┘
-                              ↓
-                    海外延迟低 ≠ 国内延迟低
-                    例如：美国节点测出 20ms
-                    国内实际访问可能 200ms+
-```
+| 现象 | 原因 |
+|------|------|
+| 延迟 200ms+ | 路绕美国西海岸或欧洲 |
+| 连接不稳定 | 部分 IP 段网络拥堵 |
+| 频繁丢包 | 国际线路质量差 |
 
-### 具体表现
+**核心问题**：默认分配的 IP 可能不是你网络环境中最快的那个。
 
-1. **测速失真**：Workers 海外节点到 CF IP 的延迟 ≠ 国内访客到同一 IP 的延迟
-2. **1003 错误**：开启 CF 代理后使用优选 IP 直连会触发 Cloudflare 安全拦截
-3. **单 IP 局限性**：无法区分运营商，电信用户可能命中移动优选 IP
+## 方案对比
 
-## 新方案架构（推荐）
+| 方案 | 测速准确性 | 实施难度 | 适用人群 |
+|------|-----------|---------|---------|
+| GitHub Actions 测速 | ❌ 海外环境，失真 | 中等 | 技术用户 |
+| Workers 测速 | ❌ 海外节点，失真 | 高 | 技术用户 |
+| **本地测速 + DNS** | ✅ 国内真实延迟 | 低 | 所有用户 |
+| VPS 中转 | ✅ 准确 | 高 | 有服务器用户 |
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│  GitHub Actions (定时任务)                                            │
-│  运行环境为国内出口，测速结果匹配国内真实延迟                              │
-│  定时：每天 4 次 (02:00, 08:00, 14:00, 20:00)                         │
-└─────────────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────────────┐
-│  CloudflareSpeedTest (测速工具)                                       │
-│  国内公认最稳的 CF IP 测速程序，支持多线程并发测试                        │
-└─────────────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────────────┐
-│  DNSPod DNS (分线路解析)                                              │
-│  电信用户 → 电信优选 IP                                               │
-│  联通用户 → 联通优选 IP                                               │
-│  移动用户 → 移动优选 IP                                               │
-└─────────────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────────────┐
-│  Cloudflare 节点 (IP 直连)                                            │
-│  关闭 CF 代理（灰色云朵），直接访问优选 IP，避免 1003 拦截               │
-└─────────────────────────────────────────────────────────────────────┘
-```
+**推荐方案**：本地测速 + DNS 解析，简单且准确。
 
-## 方案优势对比
+## 步骤一：下载测速工具
 
-| 特性 | 旧方案 (Workers) | 新方案 (Actions + DNSPod) |
-|------|------------------|--------------------------|
-| 测速环境 | 海外节点 | 国内线路（匹配真实访客） |
-| 准确率 | 低（失真严重） | 高（接近 100%） |
-| 运营商区分 | 不支持 | 支持三网分线路 |
-| 1003 错误 | 易触发 | 完全避免 |
-| 成本 | 免费 | 免费 |
-| 稳定性 | 中等 | 高 |
+使用开源工具 [XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)，这是国内公认最稳定的 CF IP 测速工具。
 
-## 步骤一：DNS 迁移到 DNSPod
+### Windows 用户
 
-### 1.1 创建 DNSPod 账号
+1. 访问 [Releases 页面](https://github.com/XIU2/CloudflareSpeedTest/releases)
+2. 下载 `CloudflareSpeedTest_windows_amd64.zip`
+3. 解压到任意目录
 
-1. 登录 [腾讯云 DNSPod](https://dnspod.cloud.tencent.com/)
-2. 如果没有账号，使用微信/QQ 扫码注册
-3. 进入 **域名管理**，点击 **添加域名**
-
-### 1.2 获取 API 密钥
-
-1. 登录 [腾讯云控制台](https://console.cloud.tencent.com/)
-2. **访问管理** → **API 密钥管理**
-3. 点击 **新建密钥**
-4. 保存 `SecretId` 和 `SecretKey`（重要，后续需要）
-
-### 1.3 添加 DNS 记录
-
-在 DNSPod 为域名添加 3 条 A 记录（分运营商）：
-
-| 主机记录 | 记录类型 | 线路类型 | 记录值 | TTL |
-|---------|---------|---------|--------|-----|
-| @ | A | 电信 | 1.1.1.1（临时值） | 600 |
-| @ | A | 联通 | 1.1.1.1（临时值） | 600 |
-| @ | A | 移动 | 1.1.1.1（临时值） | 600 |
-
-> 注意：记录值先填临时 IP，后续 Actions 会自动更新。
-
-### 1.4 修改域名 NS 记录
-
-将域名的 DNS 服务器修改为 DNSPod 的 NS：
-
-```
-f1g1ns1.dnspod.net
-f1g1ns2.dnspod.net
-```
-
-> 不同域名注册商修改位置不同，一般在"域名管理"→"DNS 服务器"中修改。
-
-## 步骤二：部署 cf2dns 项目
-
-### 2.1 Fork 仓库
-
-访问 [tmmtoo/cf2dns](https://github.com/tmmtoo/cf2dns)，点击 **Fork** 到你自己的 GitHub 账号。
-
-### 2.2 配置 Secrets
-
-进入 Fork 后的仓库 → **Settings** → **Secrets and variables** → **Actions**：
-
-点击 **New repository secret**，添加以下 4 个密钥：
-
-| Secret 名称 | 填写内容 |
-|------------|---------|
-| SECRETID | 腾讯云 SecretId |
-| SECRETKEY | 腾讯云 SecretKey |
-| DOMAINS | 域名配置，示例：`{"xiaozha.org":{"@":["CM","CU","CT"]}}` |
-| KEY | 留空或使用内置公共 IP 库 |
-
-> 参数说明：
-> - `CM` = 移动（China Mobile）
-> - `CU` = 联通（China Unicom）
-> - `CT` = 电信（China Telecom）
-
-### 2.3 配置定时任务
-
-编辑 `.github/workflows/main.yml`，修改 Cron 表达式：
-
-```yaml
-on:
-  schedule:
-    - cron: '0 2,8,14,20 * * *'  # 每天 4 次：02:00, 08:00, 14:00, 20:00
-  workflow_dispatch:  # 手动触发
-```
-
-> 建议每天 4 次轮换，防止 IP 被封堵。
-
-## 步骤三：Cloudflare 配置
-
-### 3.1 关闭橙色代理
-
-在 Cloudflare 控制台（如果你还保留了 CF 配置）：
-
-1. **左侧菜单** → **域名** → 选择你的域名
-2. 找到对应的 DNS 记录
-3. 将代理状态改为 **仅 DNS**（灰色云朵图标）
-
-> **关键**：关闭 CF 代理，优选 IP 直连，不会触发 1003 拦截。
-
-### 3.2 SSL 设置
-
-1. **左侧菜单** → **SSL/TLS** → **概述**
-2. 设置为 **严格 (Strict)**
-3. 确保站点已配置有效的 SSL 证书
-
-## 步骤四：验证测试
-
-### 4.1 手动触发一次
-
-在 Fork 的仓库页面 → **Actions** → 选择工作流 → **Run workflow**：
-
-等待工作流执行完成，查看日志确认：
-- CloudflareSpeedTest 成功测速
-- 选出了最优 IP
-- DNSPod DNS 记录已更新
-
-### 4.2 验证分线路解析
-
-使用不同运营商的网络访问你的网站，检查响应头或使用 DNS 查询工具：
+### macOS/Linux 用户
 
 ```bash
-# 电信线路
-nslookup xiaozha.org 202.96.128.86
+# 下载最新版本
+wget https://github.com/XIU2/CloudflareSpeedTest/releases/download/v2.2.5/CloudflareSpeedTest_linux_amd64.tar.gz
+
+# 解压
+tar -zxvf CloudflareSpeedTest_linux_amd64.tar.gz
+```
+
+## 步骤二：运行测速
+
+### Windows
+
+双击 `CloudflareST.exe` 或在 PowerShell 中运行：
+
+```powershell
+.\CloudflareST.exe
+```
+
+### macOS/Linux
+
+```bash
+./CloudflareST
+```
+
+### 测速参数说明
+
+工具会自动测试 Cloudflare 的 IPv4 IP 段（104.16.0.0/12、172.64.0.0/13），默认参数：
+
+- 测试 IP 数量：约 2000 个
+- 并发线程：200
+- 测速次数：10 次/延迟、1 次/下载速度
+- 延迟上限：200ms
+- 下载速度下限：5MB/s
+
+### 自定义参数示例
+
+```bash
+# 只测电信线路的 IP
+./CloudflareST -url https://cf.xiu2.xyz/url -t 10 -n 100 -tl 100 -dd
+
+# 参数说明：
+# -t 10     延迟测试次数
+# -n 100    测试 IP 数量
+# -tl 100   延迟上限（毫秒）
+# -dd       禁用下载速度测试（仅测延迟）
+```
+
+## 步骤三：查看测速结果
+
+测速完成后，结果保存在 `result.csv` 文件中：
+
+```csv
+104.16.132.22,延迟:45ms,下载速度:25MB/s
+172.64.155.88,延迟:52ms,下载速度:18MB/s
+104.18.42.166,延迟:68ms,下载速度:12MB/s
+```
+
+### 选择标准
+
+| 指标 | 推荐值 | 说明 |
+|------|--------|------|
+| 延迟 | ≤ 100ms | 越低越好，50ms 内最佳 |
+| 下载速度 | ≥ 5MB/s | 越高越好 |
+| 丢包率 | 0% | 必须为 0 |
+
+选择延迟最低、速度最高的前 3-5 个 IP 作为备用。
+
+## 步骤四：应用优选 IP
+
+有三种应用方式，按推荐度排序：
+
+### 方案 A：修改域名 DNS 解析（推荐）
+
+**适用场景**：你有域名管理权限，想让所有访客受益
+
+#### 操作步骤
+
+1. 登录域名 DNS 管理面板（如 Cloudflare、阿里云 DNS、DNSPod）
+2. 找到你的域名 A 记录
+3. 将记录值改为优选 IP
+
+**示例**：
+
+| 主机记录 | 类型 | 记录值 | 代理状态 |
+|---------|------|--------|---------|
+| @ | A | 104.16.132.22 | 仅 DNS（灰云） |
+| www | A | 104.16.132.22 | 仅 DNS（灰云） |
+
+#### ⚠️ 重要提醒
+
+如果你的域名托管在 Cloudflare：
+
+1. **必须关闭橙色代理**（改为灰云/DNS only）
+2. 否则直接使用 IP 会触发 1003 错误
+3. SSL/TLS 设置改为"完全（严格）"
+
+### 方案 B：修改本地 hosts 文件
+
+**适用场景**：只加速自己的访问，不影响其他人
+
+#### Windows
+
+编辑文件 `C:\Windows\System32\drivers\etc\hosts`：
+
+```text
+104.16.132.22  xiaozha.org
+104.16.132.22  www.xiaozha.org
+```
+
+#### macOS/Linux
+
+编辑文件 `/etc/hosts`：
+
+```text
+104.16.132.22  xiaozha.org
+104.16.132.22  www.xiaozha.org
+```
+
+保存后刷新 DNS 缓存：
+
+```bash
+# macOS
+sudo dscacheutil -flushcache
+
+# Linux
+sudo systemctl restart nscd
+```
+
+### 方案 C：使用 CNAME 优选服务
+
+**适用场景**：不想自己测速，使用他人维护的优选 IP
+
+一些服务商提供动态优选 IP CNAME：
+
+| 服务 | CNAME 地址 | 说明 |
+|------|-----------|------|
+| CloudflareOptimized | cf-optimized.com | 自动优选 |
+| IP优选 | bestcf.onecf.eu.org | 社区维护 |
+
+#### 配置方法
+
+将域名 CNAME 指向优选服务：
+
+| 主机记录 | 类型 | 记录值 |
+|---------|------|--------|
+| @ | CNAME | cf-optimized.com |
+
+> 注意：使用第三方服务存在稳定性风险，建议定期检查。
+
+## 步骤五：验证效果
+
+### 检查 DNS 解析
+
+```bash
+nslookup xiaozha.org
+
+# 应返回你设置的优选 IP
+# 例如：104.16.132.22
+```
+
+### 测试访问速度
+
+```bash
+# Windows PowerShell
+Measure-Command { Invoke-WebRequest https://xiaozha.org }
+
+# macOS/Linux
+curl -w "Time: %{time_total}s\n" -o /dev/null -s https://xiaozha.org
+```
+
+### 浏览器测试
+
+1. 打开浏览器开发者工具（F12）
+2. 切换到 Network 面板
+3. 刷新页面
+4. 查看 TTFB（Time to First Byte）
+
+**优化目标**：
+
+| 指标 | 优化前 | 优化后 |
+|------|--------|--------|
+| TTFB | 200-500ms | 50-100ms |
+| 页面加载 | 3-5s | 1-2s |
+
+## 高级方案：三网分线路解析
+
+如果你希望电信、联通、移动用户分别使用不同的优选 IP，可以使用 DNSPod 的分线路解析功能。
+
+### 前提条件
+
+- 域名 DNS 迁移到 DNSPod
+- 分别测出三网的优选 IP
+
+### 配置方法
+
+在 DNSPod 添加多条 A 记录：
+
+| 主机记录 | 类型 | 线路类型 | 记录值 |
+|---------|------|---------|--------|
+| @ | A | 电信 | 104.16.132.22 |
+| @ | A | 联通 | 172.64.155.88 |
+| @ | A | 移动 | 104.18.42.166 |
+
+### 如何分别测速
+
+CloudflareSpeedTest 支持指定运营商 IP 段：
+
+```bash
+# 电信线路（下载电信 IP 段文件）
+./CloudflareST -f ip_ct.txt
 
 # 联通线路
-nslookup xiaozha.org 219.150.32.132
+./CloudflareST -f ip_cu.txt
 
 # 移动线路
-nslookup xiaozha.org 211.136.112.200
+./CloudflareST -f ip_cm.txt
 ```
 
-应该返回不同的优选 IP。
-
-### 4.3 验证访问速度
-
-使用浏览器开发者工具（F12）→ **网络** 面板，查看页面加载时间：
-
-- 首屏加载时间应低于 1 秒
-- 静态资源加载时间应低于 200ms
-
-## 避坑要点
-
-### 坑 1：不要在 Workers 里测速
-
-**原因**：Workers 运行在海外节点，测速结果失真。
-
-**解决方案**：改用 GitHub Actions，其运行环境为国内出口。
-
-### 坑 2：优选 IP 必须关闭 CF 代理
-
-**原因**：开启 CF 橙色代理后，IP 直连会触发 1003 安全拦截。
-
-**解决方案**：DNS 记录使用灰色云朵（仅 DNS）。
-
-### 坑 3：不要单次扫描过多 IP
-
-**原因**：频繁大量扫描可能触发 Cloudflare 风控。
-
-**解决方案**：每 6 小时测速一次，单次 50 个 IP 即可。
-
-### 坑 4：选择正确的 IP 段
-
-**原因**：Cloudflare 有回源 IP 和访客任播 IP，选错会影响效果。
-
-**解决方案**：只选择以下访客任播段：
-```
-104.16.0.0/12
-172.64.0.0/13
-```
-
-## 备用方案：低配 VPS 定时任务
-
-如果你有闲置小 VPS（国内轻量云，最低配置即可，月费 5 元以内），稳定性高于 Actions。
-
-### 1. 安装 CloudflareSpeedTest
-
-```bash
-wget https://github.com/XIU2/CloudflareSpeedTest/releases/download/v2.2.5/CloudflareSpeedTest_linux_amd64.tar.gz
-tar -zxvf CloudflareSpeedTest_linux_amd64.tar.gz
-mv CloudflareSpeedTest /usr/local/bin/
-```
-
-### 2. 编写测速脚本
-
-创建 `cf-speedtest.sh`：
-
-```bash
-#!/bin/bash
-
-CLOUDFLAREST="/usr/local/bin/CloudflareSpeedTest"
-RESULT_FILE="/tmp/cf-result.csv"
-DOMAIN="xiaozha.org"
-
-# 测速，输出延迟最低的 10 个 IP
-$CLOUDFLAREST -o $RESULT_FILE -dn 10
-
-# 提取最优 IP
-BEST_IP=$(head -n 1 $RESULT_FILE | cut -d ',' -f 1)
-
-echo "最优 IP: $BEST_IP"
-```
-
-### 3. 配置 DNSPod API 更新
-
-使用 DNSPod API 自动更新 DNS 记录：
-
-```bash
-# 需要安装 jq
-apt install -y jq
-
-# 获取记录 ID
-RECORD_ID=$(curl -s "https://dnsapi.cn/Record.List" \
-  -d "login_token=SecretId,SecretKey" \
-  -d "format=json" \
-  -d "domain=$DOMAIN" \
-  -d "sub_domain=@" \
-  | jq -r '.records[0].id')
-
-# 更新记录
-curl -s "https://dnsapi.cn/Record.Modify" \
-  -d "login_token=SecretId,SecretKey" \
-  -d "format=json" \
-  -d "domain=$DOMAIN" \
-  -d "record_id=$RECORD_ID" \
-  -d "sub_domain=@" \
-  -d "record_type=A" \
-  -d "record_line=电信" \
-  -d "value=$BEST_IP"
-```
-
-### 4. 设置定时任务
-
-```bash
-crontab -e
-
-# 添加以下内容（每 6 小时执行一次）
-0 */6 * * * /root/cf-speedtest.sh >> /var/log/cf-speedtest.log 2>&1
-```
-
-## 终极稳速架构（推荐）
-
-兼顾加速 + 防封，配置故障转移：
-
-```
-┌─────────────────────────────────────────────────────────┐
-│  主解析：DNSPod 三线路优选 IP                            │
-│  电信/联通/移动用户自动匹配对应最快节点                    │
-│  关闭 CF 代理，IP 直连                                   │
-└─────────────────────────────────────────────────────────┘
-                              ↓
-                    IP 失效时自动切换
-                              ↓
-┌─────────────────────────────────────────────────────────┐
-│  备用解析：Cloudflare Workers 反代                       │
-│  当所有优选 IP 失效时，自动回退到 Worker 兜底线路          │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Workers 兜底代码
-
-创建一个 Worker 作为故障兜底：
-
-```javascript
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
-
-const TARGET_DOMAIN = 'blog-ac5.pages.dev';
-
-async function handleRequest(request) {
-  const url = new URL(request.url);
-  
-  try {
-    const targetUrl = new URL(`https://${TARGET_DOMAIN}${url.pathname}${url.search}`);
-    
-    const newRequest = new Request(targetUrl, {
-      headers: new Headers({
-        ...request.headers,
-        'Host': TARGET_DOMAIN
-      }),
-      method: request.method,
-      body: request.body,
-      cf: { cacheTtl: 0 }
-    });
-    
-    const response = await fetch(newRequest);
-    const responseHeaders = new Headers(response.headers);
-    
-    responseHeaders.set('X-CF-Fallback', 'active');
-    
-    return new Response(response.body, {
-      status: response.status,
-      headers: responseHeaders
-    });
-  } catch (e) {
-    console.error('兜底请求失败:', e);
-    return new Response('服务暂时不可用', { status: 503 });
-  }
-}
-```
-
-## 成本总结
-
-| 资源 | 费用 | 说明 |
-|------|------|------|
-| GitHub Actions | 免费 | 每月 2000 分钟运行时长 |
-| DNSPod DNS | 免费 | 免费版足够 |
-| Cloudflare | 免费 | 免费版带宽和功能足够 |
-| 国内 VPS（可选） | 约 5 元/月 | 仅备用方案需要 |
-
-**全程免费方案可用**，对于个人博客完全足够。
+IP 段文件需要从社区获取或自己整理。
 
 ## 常见问题
 
-### Q: 为什么 GitHub Actions 测速更准确？
+### Q1：为什么关闭 Cloudflare 代理后还能访问？
 
-A: GitHub Actions 的运行环境虽然在海外，但使用的是国内出口线路（通过 CDN 加速），测速结果更接近国内真实延迟。
+A：Cloudflare 的任播 IP 段（104.16.0.0/12、172.64.0.0/13）是公开的访客入口 IP。关闭代理只是不再经过 CF 的安全过滤和加速层，但 IP 仍然指向 CF 节点。
 
-### Q: 如何查看测速日志？
+### Q2：优选 IP 会失效吗？
 
-A: 在 GitHub Actions 工作流页面，点击对应的运行记录即可查看详细日志。
+A：会。Cloudflare IP 的网络状况会变化，建议：
+- 每 1-2 周重新测速
+- 保留 3-5 个备用 IP
+- 监控网站访问速度
 
-### Q: 优选 IP 会被封禁吗？
+### Q3：如何自动更新优选 IP？
 
-A: Cloudflare 的访客任播 IP 段不会被封禁，但可能会出现网络波动。建议每天多次轮换优选 IP。
+A：可以使用定时脚本：
 
-### Q: 需要保留 Cloudflare 配置吗？
+```bash
+# 创建自动更新脚本 auto-update-cf.sh
+#!/bin/bash
 
-A: 需要保留 Cloudflare 作为源站托管，但 DNS 解析必须在 DNSPod，CF 代理必须关闭（灰色云朵）。
+# 测速
+./CloudflareST -o result.csv -dd
 
-### Q: 如何验证分线路解析是否生效？
+# 获取最优 IP
+BEST_IP=$(head -n 1 result.csv | cut -d ',' -f 1)
 
-A: 使用不同运营商的手机网络访问网站，或使用在线 DNS 查询工具分别查询电信/联通/移动线路的解析结果。
+# 更新 DNS（需配置 DNSPod API）
+curl -s "https://dnsapi.cn/Record.Modify" \
+  -d "login_token=$SECRET_ID,$SECRET_KEY" \
+  -d "format=json" \
+  -d "domain=xiaozha.org" \
+  -d "record_id=$RECORD_ID" \
+  -d "sub_domain=@" \
+  -d "record_type=A" \
+  -d "record_line=默认" \
+  -d "value=$BEST_IP"
 
-## 总结
+echo "DNS 已更新为: $BEST_IP"
+```
 
-通过 **GitHub Actions + CloudflareSpeedTest + DNSPod** 方案，我们实现了：
+配合 crontab 定时执行：
 
-1. **精准测速**：国内线路测速，结果匹配真实访客延迟
-2. **三网分线路**：电信/联通/移动用户自动匹配对应最优 IP
-3. **零成本**：全程使用免费资源
-4. **高可用性**：IP 失效时自动切换，保证网站永不离线
-5. **彻底避坑**：关闭 CF 代理，避免 1003 拦截
+```bash
+# 每 6 小时更新一次
+0 */6 * * * /path/to/auto-update-cf.sh
+```
 
-这套方案彻底解决了之前 Workers 测速失真的问题，是目前国内访问 Cloudflare 站点的最优选择。
+### Q4：SSL 证书会失效吗？
+
+A：不会。只要你的域名在 Cloudflare 托管过，CF 会自动签发证书。即使改为灰云解析，证书仍然有效。
+
+但需要注意：
+- SSL/TLS 模式设置为"完全（严格）"
+- 源站必须有有效证书（CF Pages/Vercel 等托管平台自动提供）
+
+### Q5：为什么有些 IP 测速快但访问慢？
+
+A：测速只反映到 CF 节点的延迟，访问速度还取决于：
+- CF 到源站的连接
+- 源站响应速度
+- 页面资源大小
+
+建议同时测试下载速度，选择延迟和速度都好的 IP。
+
+## 避坑总结
+
+| 错误做法 | 问题 | 正确做法 |
+|---------|------|---------|
+| 海外测速 | 结果失真 | 本地测速 |
+| 开启橙云 + 直连 IP | 1003 错误 | 关闭代理（灰云） |
+| 单一 IP 无备用 | IP 失效后无法访问 | 保留多个备用 IP |
+| 频繁测速大量 IP | 触发风控 | 每周 1 次，每次 100-200 IP |
+
+## 方案总结
+
+本文推荐的**本地测速 + DNS 解析**方案：
+
+| 优势 | 说明 |
+|------|------|
+| 测速准确 | 在自己电脑测速，反映真实延迟 |
+| 简单易行 | 无需服务器、无需编程 |
+| 全站受益 | 所有访客都能加速 |
+| 零成本 | 工具和 DNS 服务全部免费 |
+
+**核心步骤**：
+
+1. 下载 CloudflareSpeedTest 工具
+2. 在本地运行测速
+3. 选择延迟最低的 IP
+4. 更新域名 DNS 解析（关闭 CF 代理）
+5. 定期重新测速并更新
+
+这套方案经实测有效，是目前最简单、最可靠的 Cloudflare 加速方案。
 
 ---
 
 **参考资料**：
 
-- [XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest)
-- [tmmtoo/cf2dns](https://github.com/tmmtoo/cf2dns)
-- [DNSPod API 文档](https://docs.dnspod.cn/api/)
-- [GitHub Actions 文档](https://docs.github.com/cn/actions)
+- [XIU2/CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest) - 测速工具
+- [CloudflareSpeedTest使用教程](https://github.com/XIU2/CloudflareSpeedTest/blob/master/README.md) - 官方文档
+- [DNSPod 分线路解析](https://docs.dnspod.cn/api/) - API 文档
