@@ -1,10 +1,9 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import RightSidebar from "@/components/RightSidebar.astro";
 import LinkButton from "@/components/LinkButton.astro";
 import { getRelativeLocaleUrl } from "@/i18n/utils";
-import { useTranslations } from "@/i18n";
 import config from "@/config";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { getCollection } from "astro:content";
@@ -16,13 +15,10 @@ const recentPosts = sortedPosts.slice(0, 5);
 ---
 
 <Layout title={`404 | ${config.site.title}`}>
-  <Header />
+  <div class="layout">
+    <Sidebar />
 
-  <main
-    id="main-content"
-    class="app-layout flex flex-1 items-center justify-center py-12"
-  >
-    <div class="max-w-4xl w-full px-6">
+    <main class="main-content">
       <div class="neu-card p-12 text-center mb-8">
         <div class="relative inline-block mb-6">
           <svg
@@ -122,8 +118,8 @@ const recentPosts = sortedPosts.slice(0, 5);
           吧！
         </p>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <Footer />
+    <RightSidebar />
+  </div>
 </Layout>

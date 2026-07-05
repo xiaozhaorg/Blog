@@ -1,5 +1,5 @@
 ---
-title: "Cloudflare 国内加速实战：优选 IP 配置指南（网站管理员版）"
+title: "Cloudflare 国内加速实战：优选 IP 配置指南"
 pubDatetime: 2026-07-05T00:00:00Z
 slug: cloudflare-ip-optimization
 featured: true
