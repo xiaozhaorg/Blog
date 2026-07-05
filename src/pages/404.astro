@@ -86,30 +86,31 @@ const recentPosts = sortedPosts.slice(0, 5);
         <h3 class="text-xl font-bold mb-6 text-center" style="color: var(--neu-accent);">
           热门文章推荐
         </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <ul class="space-y-3">
           {recentPosts.map((post) => {
             const slug = post.id.split("/").pop();
             return (
-            <article
-              class="neu-card p-4 hover:shadow-lg transition-shadow cursor-pointer group"
-            >
-              <a href={`/posts/${slug}/`} class="block h-full">
-                <h4 class="font-semibold mb-2 line-clamp-2 group-hover:text-[var(--neu-accent)] transition-colors">
-                  {post.data.title}
-                </h4>
-                <p class="text-sm text-[var(--neu-text-muted)] line-clamp-2">
-                  {post.data.description}
-                </p>
-                <div class="mt-3 flex items-center gap-2">
-                  <span class="text-xs px-2 py-1 rounded-full bg-[var(--neu-bg-secondary)] text-[var(--neu-text-muted)]">
-                    {new Date(post.data.pubDatetime).toLocaleDateString("zh-CN")}
-                  </span>
+            <li>
+              <a href={`/posts/${slug}/`} class="flex items-center gap-4 p-3 rounded-lg hover:bg-[var(--neu-bg-secondary)] transition-colors group">
+                <svg class="w-5 h-5 text-[var(--neu-accent)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-semibold truncate group-hover:text-[var(--neu-accent)] transition-colors">
+                    {post.data.title}
+                  </h4>
+                  <p class="text-sm text-[var(--neu-text-muted)] truncate">
+                    {post.data.description}
+                  </p>
                 </div>
+                <span class="text-xs px-2 py-1 rounded-full bg-[var(--neu-bg-secondary)] text-[var(--neu-text-muted)] flex-shrink-0">
+                  {new Date(post.data.pubDatetime).toLocaleDateString("zh-CN")}
+                </span>
               </a>
-            </article>
+            </li>
             );
           })}
-        </div>
+        </ul>
       </div>
 
       <div class="text-center mt-8">
