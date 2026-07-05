@@ -1,0 +1,56 @@
+User-agent: *
+Allow: /
+Allow: /posts/
+Allow: /tags/
+Allow: /about/
+Allow: /archives/
+Allow: /search/
+
+Disallow: /pagefind/
+Disallow: /_astro/
+
+Sitemap: https://xiaozha.org/sitemap-index.xml
+
+User-agent: Baiduspider
+Allow: /
+Allow: /posts/
+Allow: /tags/
+Allow: /about/
+Allow: /archives/
+Allow: /search/
+Disallow: /pagefind/
+Disallow: /_astro/
+Sitemap: https://xiaozha.org/sitemap-index.xml
+
+User-agent: Googlebot
+Allow: /
+Allow: /posts/
+Allow: /tags/
+Allow: /about/
+Allow: /archives/
+Allow: /search/
+Disallow: /pagefind/
+Disallow: /_astro/
+Sitemap: https://xiaozha.org/sitemap-index.xml
+
+User-agent: 360Spider
+Allow: /
+Allow: /posts/
+Allow: /tags/
+Allow: /about/
+Allow: /archives/
+Allow: /search/
+Disallow: /pagefind/
+Disallow: /_astro/
+Sitemap: https://xiaozha.org/sitemap-index.xml
+
+User-agent: Sogou Spider
+Allow: /
+Allow: /posts/
+Allow: /tags/
+Allow: /about/
+Allow: /archives/
+Allow: /search/
+Disallow: /pagefind/
+Disallow: /_astro/
+Sitemap: https://xiaozha.org/sitemap-index.xml

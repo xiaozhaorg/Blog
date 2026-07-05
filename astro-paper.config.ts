@@ -13,6 +13,7 @@ export default defineAstroPaperConfig({
     timezone: "Asia/Shanghai",
     dir: "ltr",
     googleAdsense: "ca-pub-8462449606343172",
+    googleVerification: "",
   },
   posts: {
     perPage: 6,

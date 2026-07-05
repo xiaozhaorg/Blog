@@ -59,6 +59,24 @@ const structuredData = {
         />
       )
     }
+    {
+      site.author && (
+        <meta
+          property="article:author"
+          content={site.author}
+        />
+      )
+    }
+    {
+      tags && tags.length > 0 && (
+        tags.map(tag => (
+          <meta
+            property="article:tag"
+            content={tag}
+          />
+        ))
+      )
+    }
 
     <script
       type="application/ld+json"
