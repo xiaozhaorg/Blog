@@ -102,4 +102,4 @@ MonkeyCode 是一款非常有潜力的云开发工具，它把 AI 和开发环�
 
 而且现在分享使用心得还能免费领取积分，最高可达 100,000 点，相当于免费使用顶级大模型很多次。感兴趣的小伙伴可以去官网体验一下！
 
-**MonkeyCode 官网**：[https://monkeycode.docs.baizhi.cloud/](https://monkeycode.docs.baizhi.cloud/)
+**MonkeyCode 官网**：[https://monkeycode-ai.com/?ic=019f071f-eb85-7351-b410-3084056207f8](https://monkeycode-ai.com/?ic=019f071f-eb85-7351-b410-3084056207f8)
