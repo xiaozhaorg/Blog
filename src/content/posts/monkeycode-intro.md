@@ -124,6 +124,6 @@ MonkeyCode 是一款让我眼前一亮的开发工具。它不仅解决了环境
 
 如果你还在为环境配置烦恼，或者想体验 AI 辅助编程的魅力，我强烈建议你试试 MonkeyCode。
 
-**MonkeyCode 官网**：[https://monkeycode-ai.com/?ic=019f071f-eb85-7351-b410-3084056207f8](https://monkeycode-ai.com/?ic=019f071f-eb85-7351-b410-3084056207f8)
+**MonkeyCode 官网**：[https://monkeycode-ai.com/](https://monkeycode-ai.com/?ic=019f071f-eb85-7351-b410-3084056207f8)
 
 现在分享使用心得还能免费领取积分，最高可达 100,000 点，相当于免费使用顶级大模型很多次。感兴趣的小伙伴可以去体验一下！
