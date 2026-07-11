@@ -1,6 +1,7 @@
 ---
 import { useTranslations } from "@/i18n";
 import config from "@/config";
+import Socials from "./Socials.astro";
 
 const locale = config.site.lang;
 const t = useTranslations(locale);
@@ -13,6 +14,9 @@ const t = useTranslations(locale);
     <a href="/posts">{t.nav.posts}</a>
     <a href="/archives">{t.nav.archives}</a>
     <a href="/tags">{t.nav.tags}</a>
+  </div>
+  <div class="footer-socials">
+    <Socials />
   </div>
   <p>
     © {new Date().getFullYear()} {t.site.title}. {t.footer.allRightsReserved}

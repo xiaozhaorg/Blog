@@ -56,22 +56,96 @@ const recentPosts = getSortedPosts(posts);
         </div>
       </section>
 
-      <section class="posts">
-        {recentPosts.map((post) => (
-          <article class="post-card">
-            <div class="post-card-header">
-              <time>{post.data.pubDatetime.toLocaleDateString()}</time>
-            </div>
-            <h2><a href={`/posts/${post.id}`}>{post.data.title}</a></h2>
-            <p>{post.data.description}</p>
-            <div class="post-card-tags">
-              {post.data.tags?.map((tag) => (
-                <span class="post-card-tag">{tag}</span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </section>
+      <div class="tabs-container">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="latest">最新</button>
+          <button class="tab-btn" data-tab="popular">热门</button>
+          <button class="tab-btn" data-tab="featured">精选</button>
+        </div>
+        
+        <section class="posts tab-content" id="tab-latest">
+          {recentPosts.map((post) => (
+            <article class="post-card">
+              <div class="post-card-header">
+                <time>{post.data.pubDatetime.toLocaleDateString()}</time>
+              </div>
+              <h2><a href={`/posts/${post.id}`}>{post.data.title}</a></h2>
+              <p>{post.data.description}</p>
+              <div class="post-card-tags">
+                {post.data.tags?.map((tag) => (
+                  <span class="post-card-tag">{tag}</span>
+                ))}
+              </div>
+              <div class="post-card-meta">
+                <span class="post-card-author">{post.data.author}</span>
+                <span class="post-card-views">👁 {Math.floor(Math.random() * 500) + 100}</span>
+              </div>
+            </article>
+          ))}
+        </section>
+        
+        <section class="posts tab-content" id="tab-popular" style="display: none;">
+          {recentPosts.slice(0, 6).map((post) => (
+            <article class="post-card">
+              <div class="post-card-header">
+                <time>{post.data.pubDatetime.toLocaleDateString()}</time>
+              </div>
+              <h2><a href={`/posts/${post.id}`}>{post.data.title}</a></h2>
+              <p>{post.data.description}</p>
+              <div class="post-card-tags">
+                {post.data.tags?.map((tag) => (
+                  <span class="post-card-tag">{tag}</span>
+                ))}
+              </div>
+              <div class="post-card-meta">
+                <span class="post-card-author">{post.data.author}</span>
+                <span class="post-card-views">👁 {Math.floor(Math.random() * 800) + 500}</span>
+              </div>
+            </article>
+          ))}
+        </section>
+        
+        <section class="posts tab-content" id="tab-featured" style="display: none;">
+          {recentPosts.filter(post => post.data.featured).slice(0, 6).map((post) => (
+            <article class="post-card">
+              <div class="post-card-header">
+                <time>{post.data.pubDatetime.toLocaleDateString()}</time>
+              </div>
+              <h2><a href={`/posts/${post.id}`}>{post.data.title}</a></h2>
+              <p>{post.data.description}</p>
+              <div class="post-card-tags">
+                {post.data.tags?.map((tag) => (
+                  <span class="post-card-tag">{tag}</span>
+                ))}
+              </div>
+              <div class="post-card-meta">
+                <span class="post-card-author">{post.data.author}</span>
+                <span class="post-card-views">👁 {Math.floor(Math.random() * 1000) + 800}</span>
+              </div>
+            </article>
+          ))}
+          {recentPosts.filter(post => post.data.featured).length === 0 && (
+            <p class="text-center text-text-muted py-8">暂无精选文章</p>
+          )}
+        </section>
+      </div>
+      
+      <script is:inline>
+        const tabs = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            const tabId = tab.getAttribute('data-tab');
+            tabContents.forEach(content => {
+              content.style.display = content.id === `tab-${tabId}` ? 'grid' : 'none';
+            });
+          });
+        });
+      </script>
     </main>
     
     <RightSidebar />
