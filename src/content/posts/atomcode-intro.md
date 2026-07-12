@@ -163,6 +163,6 @@ AtomCode 是一款让我非常惊喜的工具。它不仅解决了终端中缺�
 
 如果你是一个终端爱好者，或者想要一个开源免费的 AI 编码工具，我强烈推荐你试试 AtomCode。
 
-**AtomCode 官网**：[https://atomcode.atomgit.com/](https://atomcode.atomgit.com/#top)
+**AtomCode 官网**：[https://atomcode.atomgit.com/](https://atomcode.atomgit.com/invite/K37T22RU)
 
 现在就去体验一下吧，相信你会喜欢上这款终端里的 AI 编码代理！
