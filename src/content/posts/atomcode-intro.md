@@ -1,0 +1,168 @@
+---
+title: "AtomCode：终端里的 AI 编码代理，开源免费且强大"
+pubDatetime: 2026-07-12T00:00:00Z
+description: "一个运行在终端的 AI 编码代理，支持任意 LLM，100% AI 生成代码库，开源免费，值得一试。"
+author: "小吒"
+tags: ["AI", "开发工具", "开源", "免费工具"]
+draft: false
+---
+
+## 发现宝藏工具
+
+作为一个经常在终端里折腾的开发者，我一直在寻找一款能够在命令行中使用的 AI 编码工具。市面上虽然有很多 IDE 插件和 Web 应用，但能在终端里原生运行的却寥寥无几。
+
+直到最近，我发现了 **AtomCode**——一款用 Rust 构建的开源 AI 编码代理，它不仅能在终端中运行，还支持连接任意 OpenAI 兼容的 LLM。这简直是为我量身定做的工具！
+
+## 安装体验：一行命令搞定
+
+AtomCode 的安装体验堪称完美。对于 macOS/Linux 用户，只需要一行命令：
+
+```bash
+curl -fsSL https://raw.atomgit.com/atomgit_atomcode/atomcode/raw/main/scripts/install.sh | sh
+```
+
+Windows 用户也有对应的 PowerShell 脚本。安装完成后，直接在项目目录下运行 `atomcode` 即可启动。
+
+首次运行时，AtomCode 会引导你完成三步配置：选择语言、设置 LLM 提供商、配置 API 密钥。整个过程非常流畅，不需要手动编辑任何配置文件。
+
+## 核心功能：终端里的 AI 助手
+
+### 智能代理循环
+
+AtomCode 的核心是一个智能代理循环：**读取 → 编辑 → 运行 → 验证**。你只需要给出一个任务描述，它就会自动完成整个流程。
+
+比如我让它修复一个登录 Bug：
+
+```
+Fix the login bug where users get 404 after OAuth
+```
+
+AtomCode 会自动读取相关文件，分析问题，修改代码，运行测试，直到任务完成。整个过程完全自动化，不需要你手动干预。
+
+### 多 LLM 提供商支持
+
+这是 AtomCode 最吸引我的地方。它支持几乎所有主流的 LLM：
+
+- **Claude** (Sonnet 4.5/4.6, Opus 4.6)
+- **OpenAI** (GPT-4o/4.1)
+- **DeepSeek** (V3/R1)
+- **GLM** (4/5)
+- **Qwen** (Plus/Max)
+- **SiliconFlow**
+- **Ollama**（本地模型）
+
+而且它支持任何 OpenAI 兼容的 API，意味着你可以接入自己部署的模型或者其他服务商。
+
+### 代码图谱工具
+
+AtomCode 内置了 8 个代码图谱工具，让 AI 能够真正理解大型代码库：
+
+- **list_symbols**：列出符号
+- **read_symbol**：读取符号定义
+- **find_references**：查找引用
+- **trace_callers**：追踪调用者
+- **trace_callees**：追踪被调用者
+- **trace_chain**：追踪调用链
+- **file_deps**：文件依赖
+- **blast_radius**：影响分析
+
+这些工具让 AI 不再是"盲人摸象"，而是能够看清整个代码库的结构和依赖关系。
+
+### 截图/图片支持
+
+AtomCode 支持通过 Ctrl+V 粘贴截图，或者直接拖拽图片。当主模型不支持视觉时，它会自动使用 VL 预处理器进行 OCR 和描述。这个功能对于调试 UI 问题特别有用。
+
+### 命令系统
+
+AtomCode 支持丰富的命令系统：
+
+- `/review`：代码审查
+- `/test`：运行测试
+- `/security`：安全审计
+- `/issue create`：创建 GitHub Issue
+- `/plugin install`：安装插件
+
+你还可以编写自己的技能（Skills），扩展 AtomCode 的功能。
+
+## IDE 插件支持
+
+虽然 AtomCode 主要是一个终端工具，但它也提供了 VS Code 和 JetBrains 的插件，让你可以在 IDE 中使用它：
+
+- **侧边栏聊天**：在编辑器侧边栏打开 AI 聊天
+- **右键菜单**：选中代码后右键解释/修复/优化
+- **Diff 预览**：所有代码变更以原生 IDE Diff 形式展示，确认后才写入
+- **会话管理**：按时间分组的会话历史，支持搜索、重命名、删除
+
+## 与 Claude Code 的对比
+
+很多人会拿 AtomCode 和 Claude Code 做比较。根据官方的基准测试：
+
+| 任务类型 | AtomCode | Claude Code |
+|---------|----------|-------------|
+| 简单编辑 | 3 步 | 3 步 |
+| 模块重构 | 7 步 | 6 步 |
+| 启动开发服务器 | 4 步 | 4 步 |
+| Bug 修复 | 5 步 | 5 步 |
+| 复杂任务 | 13 步 | 10 步 |
+
+在复杂任务上，AtomCode 比 Claude Code 多约 30% 的步骤。这并不是因为它能力弱，而是因为它采用了"小步快跑 + 自我验证"的策略——每个操作都是独立可撤销的，上下文更细粒度，中途更容易干预。
+
+如果你更看重安全性和可干预性，AtomCode 是更好的选择；如果你追求速度和一次性完成，Claude Code 可能更适合。
+
+## 开源免费，社区驱动
+
+AtomCode 是完全开源的（MIT 许可证），而且代码库本身是 100% AI 生成的。这意味着：
+
+1. **免费使用**：没有订阅费用，只需要自己的 API 密钥
+2. **透明可审计**：所有代码都在 GitHub 上，你可以看到它的工作原理
+3. **社区驱动**：任何人都可以贡献代码，添加功能
+4. **定制化**：你可以根据自己的需求修改源代码
+
+## 适合谁使用
+
+**1. 终端爱好者**
+- 喜欢在命令行中工作
+- 不想切换到 IDE 或浏览器
+- 追求极简的开发体验
+
+**2. 多模型用户**
+- 同时使用多个 LLM
+- 想要根据任务选择最合适的模型
+- 使用本地模型（Ollama）
+
+**3. 开源贡献者**
+- 想要参与开源项目
+- 喜欢 AI 生成代码的理念
+- 想要定制自己的编码工具
+
+**4. 开发者**
+- 需要快速完成编码任务
+- 想要 AI 辅助代码审查和测试
+- 追求高效的开发流程
+
+## 安装方式
+
+**macOS / Linux / HarmonyOS PC：**
+```bash
+curl -fsSL https://raw.atomgit.com/atomgit_atomcode/atomcode/raw/main/scripts/install.sh | sh
+```
+
+**Windows（PowerShell）：**
+```powershell
+irm https://raw.atomgit.com/atomgit_atomcode/atomcode/raw/main/scripts/install.ps1 | iex
+```
+
+**VS Code 插件：**
+```bash
+code --install-extension atomcode-tools.atomcode-tools
+```
+
+## 总结
+
+AtomCode 是一款让我非常惊喜的工具。它不仅解决了终端中缺少 AI 编码助手的问题，还通过多模型支持、代码图谱工具等功能，提供了堪比商业产品的体验。
+
+如果你是一个终端爱好者，或者想要一个开源免费的 AI 编码工具，我强烈推荐你试试 AtomCode。
+
+**AtomCode 官网**：[https://atomcode.atomgit.com/](https://atomcode.atomgit.com/#top)
+
+现在就去体验一下吧，相信你会喜欢上这款终端里的 AI 编码代理！
