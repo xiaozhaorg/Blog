@@ -76,10 +76,6 @@ const recentPosts = getSortedPosts(posts);
                   <span class="post-card-tag">{tag}</span>
                 ))}
               </div>
-              <div class="post-card-meta">
-                <span class="post-card-author">{post.data.author}</span>
-                <span class="post-card-views">👁 {Math.floor(Math.random() * 500) + 100}</span>
-              </div>
             </article>
           ))}
         </section>
@@ -97,10 +93,6 @@ const recentPosts = getSortedPosts(posts);
                   <span class="post-card-tag">{tag}</span>
                 ))}
               </div>
-              <div class="post-card-meta">
-                <span class="post-card-author">{post.data.author}</span>
-                <span class="post-card-views">👁 {Math.floor(Math.random() * 800) + 500}</span>
-              </div>
             </article>
           ))}
         </section>
@@ -117,10 +109,6 @@ const recentPosts = getSortedPosts(posts);
                 {post.data.tags?.map((tag) => (
                   <span class="post-card-tag">{tag}</span>
                 ))}
-              </div>
-              <div class="post-card-meta">
-                <span class="post-card-author">{post.data.author}</span>
-                <span class="post-card-views">👁 {Math.floor(Math.random() * 1000) + 800}</span>
               </div>
             </article>
           ))}

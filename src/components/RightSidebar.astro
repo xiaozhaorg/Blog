@@ -15,16 +15,6 @@ const filteredPosts = posts.filter(postFilter);
 const recentPosts = getSortedPosts(posts).slice(0, 5);
 const tags = getUniqueTags(posts).slice(0, 10);
 
-const categories = filteredPosts
-  .flatMap(post => post.data.tags)
-  .reduce((acc, tag) => {
-    const slug = slugifyStr(tag);
-    if (!acc[slug]) {
-      acc[slug] = { tagName: tag, count: 0 };
-    }
-    acc[slug].count++;
-    return acc;
-  }, {} as Record<string, { tagName: string; count: number }>);
 ---
 
 <aside class="right-sidebar">
@@ -36,18 +26,6 @@ const categories = filteredPosts
       </svg>
       <input type="text" placeholder="搜索网站..." />
     </div>
-  </div>
-
-  <div class="widget">
-    <h3>📂 分类导航</h3>
-    <ul class="category-list">
-      {Object.entries(categories).map(([tag, { tagName, count }]) => (
-        <li>
-          <a href={`/tags/${tag}`}>{tagName}</a>
-          <span class="category-count">{count}</span>
-        </li>
-      ))}
-    </ul>
   </div>
 
   <div class="widget">

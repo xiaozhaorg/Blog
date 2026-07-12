@@ -26,8 +26,4 @@ const postUrl = getPostUrl(id, filePath, Astro.currentLocale);
       ))}
     </div>
   )}
-  <div class="post-card-meta">
-    <span class="post-card-author">{data.author}</span>
-    <span class="post-card-views">👁 {Math.floor(Math.random() * 500) + 100}</span>
-  </div>
 </article>
