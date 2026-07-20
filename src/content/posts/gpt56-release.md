@@ -8,7 +8,7 @@ tags: ["AI", "大模型", "教程"]
 description: OpenAI 于2026年7月发布 GPT-5.6 系列大模型，本文深度解析其新特性、能力提升、适用场景及如何选择，帮你快速了解这一AI新里程碑。
 ---
 
-![GPT-5.6 发布](/images/gpt56-release/cover.png)
+![GPT-5.6 正式发布](/images/gpt56-release/cover.svg)
 
 2026 年 7 月 9 日，OpenAI 正式发布了 GPT-5.6 系列大模型。作为 GPT-5 架构的最新迭代版本，GPT-5.6 在推理能力、多模态理解和代码生成方面都有显著提升。本文将带你全面了解 GPT-5.6 的核心变化。
 

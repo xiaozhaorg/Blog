@@ -8,7 +8,7 @@ tags: ["Cloudflare", "教程", "免费工具"]
 description: 手把手教你使用 Cloudflare Workers 免费搭建个人博客，无需服务器，全球CDN加速，支持自定义域名，零成本上线你的网站。
 ---
 
-![Cloudflare Workers 建站](/images/cloudflare-workers-blog/cover.png)
+![Cloudflare Workers 免费建站](/images/cloudflare-workers-blog/cover.svg)
 
 Cloudflare 被网友亲切地称为"赛博活佛"，因为它的 Free 账号提供了大量实用功能。今天我们就来用 Cloudflare Workers 搭建一个完全免费的个人博客，无需购买服务器，享受全球 CDN 加速。
 

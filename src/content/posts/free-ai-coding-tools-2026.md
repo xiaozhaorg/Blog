@@ -8,7 +8,7 @@ tags: ["AI", "开发工具", "免费工具", "开源"]
 description: 2026年最值得使用的免费AI编程助手横评，对比 Codeium、Trae、CodeGeeX 等工具的功能、体验和限制，帮你选到最适合的AI编程搭档。
 ---
 
-![AI 编程助手横评](/images/free-ai-coding-tools-2026/cover.png)
+![2026 免费 AI 编程助手横评](/images/free-ai-coding-tools-2026/cover.svg)
 
 AI 编程助手已经不是什么新鲜事，但 GitHub Copilot 每月 $10 的订阅费让不少个人开发者望而却步。好消息是，2026 年有越来越多优秀的 **免费** AI 编程工具涌现，功能并不比付费的差。本文横评 5 款主流免费 AI 编程助手，帮你找到最适合的那一个。
 

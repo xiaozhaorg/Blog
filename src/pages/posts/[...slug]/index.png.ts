@@ -1,11 +1,18 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
-import { fontData, experimental_getFontFileURL } from "astro:assets";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import satori from "satori";
 import sharp from "sharp";
-import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
 import { getPostSlug } from "@/utils/getPostPaths";
 import config from "@/config";
+
+const regularFontData = readFileSync(
+  join(process.cwd(), "src/assets/fonts/NotoSansSC-Regular.woff")
+);
+const boldFontData = readFileSync(
+  join(process.cwd(), "src/assets/fonts/NotoSansSC-Bold.woff")
+);
 
 export async function getStaticPaths() {
   if (!config.features.dynamicOgImage) {
@@ -22,34 +29,17 @@ export async function getStaticPaths() {
   }));
 }
 
-export const GET: APIRoute = async ({ props, url }) => {
+export const GET: APIRoute = async ({ props }) => {
   if (!config.features.dynamicOgImage) {
     return new Response(null, { status: 404, statusText: "Not found" });
   }
-
-  const fonts = fontData["--font-google-sans-code"];
-  const regularFontPath = getFontPathByWeight(fonts, 400);
-  const boldFontPath = getFontPathByWeight(fonts, 700);
-
-  if (regularFontPath === undefined || boldFontPath === undefined) {
-    throw new Error("Cannot find the font path.");
-  }
-
-  const [regularData, boldData] = await Promise.all([
-    fetch(experimental_getFontFileURL(regularFontPath, url)).then(res =>
-      res.arrayBuffer()
-    ),
-    fetch(experimental_getFontFileURL(boldFontPath, url)).then(res =>
-      res.arrayBuffer()
-    ),
-  ]);
 
   const svg = await satori(
     {
       type: "div",
       props: {
         style: {
-          background: "#fefbfb",
+          background: "#ffffff",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -64,10 +54,10 @@ export const GET: APIRoute = async ({ props, url }) => {
                 position: "absolute",
                 top: "-1px",
                 right: "-1px",
-                border: "4px solid #000",
-                background: "#ecebeb",
+                border: "4px solid #6366f1",
+                background: "#f0f0ff",
                 opacity: "0.9",
-                borderRadius: "4px",
+                borderRadius: "8px",
                 display: "flex",
                 justifyContent: "center",
                 margin: "2.5rem",
@@ -80,9 +70,9 @@ export const GET: APIRoute = async ({ props, url }) => {
             type: "div",
             props: {
               style: {
-                border: "4px solid #000",
-                background: "#fefbfb",
-                borderRadius: "4px",
+                border: "4px solid #6366f1",
+                background: "#ffffff",
+                borderRadius: "8px",
                 display: "flex",
                 justifyContent: "center",
                 margin: "2rem",
@@ -96,7 +86,7 @@ export const GET: APIRoute = async ({ props, url }) => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    margin: "20px",
+                    margin: "30px",
                     width: "90%",
                     height: "90%",
                   },
@@ -105,10 +95,12 @@ export const GET: APIRoute = async ({ props, url }) => {
                       type: "p",
                       props: {
                         style: {
-                          fontSize: 72,
+                          fontSize: 56,
                           fontWeight: "bold",
-                          maxHeight: "84%",
+                          maxHeight: "80%",
                           overflow: "hidden",
+                          color: "#1f2937",
+                          lineHeight: 1.2,
                         },
                         children: props.data.title,
                       },
@@ -121,38 +113,21 @@ export const GET: APIRoute = async ({ props, url }) => {
                           justifyContent: "space-between",
                           width: "100%",
                           marginBottom: "8px",
-                          fontSize: 28,
+                          fontSize: 24,
+                          color: "#6b7280",
                         },
                         children: [
                           {
                             type: "span",
                             props: {
-                              children: [
-                                "by ",
-                                {
-                                  type: "span",
-                                  props: {
-                                    style: { color: "transparent" },
-                                    children: '"',
-                                  },
-                                },
-                                {
-                                  type: "span",
-                                  props: {
-                                    style: {
-                                      overflow: "hidden",
-                                      fontWeight: "bold",
-                                    },
-                                    children: props.data.author,
-                                  },
-                                },
-                              ],
+                              style: { fontWeight: "bold" },
+                              children: config.site.author,
                             },
                           },
                           {
                             type: "span",
                             props: {
-                              style: { overflow: "hidden", fontWeight: "bold" },
+                              style: { overflow: "hidden", fontWeight: "bold", color: "#6366f1" },
                               children: config.site.title,
                             },
                           },
@@ -173,14 +148,14 @@ export const GET: APIRoute = async ({ props, url }) => {
       embedFont: true,
       fonts: [
         {
-          name: "Google Sans Code",
-          data: regularData,
+          name: "Noto Sans SC",
+          data: regularFontData,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Google Sans Code",
-          data: boldData,
+          name: "Noto Sans SC",
+          data: boldFontData,
           weight: 700,
           style: "normal",
         },
