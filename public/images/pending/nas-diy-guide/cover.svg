@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <g transform="translate(700, 140)">
+    <rect x="0" y="0" width="100" height="220" rx="6" fill="white" opacity="0.15"/>
+    <rect x="120" y="0" width="100" height="220" rx="6" fill="white" opacity="0.2"/>
+    <rect x="240" y="0" width="100" height="220" rx="6" fill="white" opacity="0.25"/>
+    <circle cx="50" cy="40" r="8" fill="#06b6d4"/>
+    <circle cx="170" cy="40" r="8" fill="#0ea5e9"/>
+    <circle cx="290" cy="40" r="8" fill="white"/>
+    <rect x="20" y="80" width="60" height="4" rx="2" fill="white" opacity="0.6"/>
+    <rect x="140" y="80" width="60" height="4" rx="2" fill="white" opacity="0.6"/>
+    <rect x="260" y="80" width="60" height="4" rx="2" fill="white" opacity="0.6"/>
+    <rect x="20" y="100" width="40" height="4" rx="2" fill="white" opacity="0.6"/>
+    <rect x="140" y="100" width="40" height="4" rx="2" fill="white" opacity="0.6"/>
+    <rect x="260" y="100" width="40" height="4" rx="2" fill="white" opacity="0.6"/>
+  </g>
+  <text x="80" y="430" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#ffffff">NAS 折腾指南</text>
+  <text x="80" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400" fill="#ffffff" opacity="0.7">小吒の博客 · 精选技术分享</text>
+  <rect x="80" y="510" width="120" height="4" rx="2" fill="url(#grad)"/>
+  <text x="80" y="570" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" fill="#ffffff" opacity="0.6">系统 · 服务</text>
+  <text x="1050" y="570" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="400" fill="#ffffff" opacity="0.5">xiaozha.org</text>
+</svg>

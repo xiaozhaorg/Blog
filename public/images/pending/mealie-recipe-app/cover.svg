@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#581c87;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6b21a8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c084fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e879f9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <g transform="translate(700, 140)">
+    <rect x="0" y="0" width="380" height="60" rx="8" fill="white" opacity="0.1"/>
+    <rect x="0" y="80" width="380" height="60" rx="8" fill="white" opacity="0.15"/>
+    <rect x="0" y="160" width="380" height="60" rx="8" fill="white" opacity="0.2"/>
+    <circle cx="30" cy="30" r="12" fill="#c084fc"/>
+    <circle cx="30" cy="110" r="12" fill="#e879f9"/>
+    <circle cx="30" cy="190" r="12" fill="white"/>
+    <text x="70" y="38" font-size="18" fill="white" font-family="system-ui">数据库</text>
+    <text x="70" y="118" font-size="18" fill="white" font-family="system-ui">文件存储</text>
+    <text x="70" y="198" font-size="18" fill="white" font-family="system-ui">云端备份</text>
+  </g>
+  <text x="80" y="430" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="700" fill="#ffffff">Mealie 自建菜谱</text>
+  <text x="80" y="480" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="400" fill="#ffffff" opacity="0.7">小吒の博客 · 精选技术分享</text>
+  <rect x="80" y="510" width="120" height="4" rx="2" fill="url(#grad)"/>
+  <text x="80" y="570" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="500" fill="#ffffff" opacity="0.6">数据 · 存储</text>
+  <text x="1050" y="570" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="400" fill="#ffffff" opacity="0.5">xiaozha.org</text>
+</svg>
