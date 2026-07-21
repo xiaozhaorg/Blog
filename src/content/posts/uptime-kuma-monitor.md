@@ -1,9 +1,9 @@
 ---
 title: "Uptime Kuma 自建监控：免费替代 UptimeRobot，漂亮又强大"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: uptime-kuma-monitor
 featured: false
-draft: true
+draft: false
 tags: ["免费工具", "开源", "教程"]
 description: Uptime Kuma 自托管监控工具，支持 HTTP、TCP、Ping、DNS 等多种监控类型，漂亮 UI + 告警通知，免费替代 UptimeRobot。
 ---

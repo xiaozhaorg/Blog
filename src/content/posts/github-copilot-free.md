@@ -1,9 +1,9 @@
 ---
 title: "GitHub Copilot 免费版深度体验：够用吗？实测告诉你答案"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: github-copilot-free
 featured: false
-draft: true
+draft: false
 tags: ["AI", "开发工具", "免费工具"]
 description: GitHub Copilot 推出免费版，本文深度体验并对比 Codeium、Tabnine 等免费替代品，告诉你免费版是否够用。
 ---

@@ -1,9 +1,9 @@
 ---
 title: "Ollama 本地部署大模型完全指南：5分钟跑起 Llama 3 / Qwen 3 / DeepSeek"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: ollama-local-llm
 featured: false
-draft: true
+draft: false
 tags: ["AI", "大模型", "教程", "免费工具"]
 description: Ollama 是最简单的本地大模型运行工具，本文详解安装、模型下载、API调用、Web UI 集成，让你5分钟跑起本地大模型。
 ---

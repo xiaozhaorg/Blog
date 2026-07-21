@@ -1,9 +1,9 @@
 ---
 title: "Claude Sonnet 4 全面解析：编程能力登顶，Claude Code 玩法详解"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: claude-sonnet-4
 featured: false
-draft: true
+draft: false
 tags: ["AI", "大模型", "教程"]
 description: Anthropic 发布 Claude Sonnet 4 编程能力大幅提升，本文详解新特性、Claude Code 工具使用、与GPT对比，帮你选择最适合的AI编程助手。
 ---

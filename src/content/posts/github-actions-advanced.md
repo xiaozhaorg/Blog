@@ -1,9 +1,9 @@
 ---
 title: "GitHub Actions 进阶：5 个实战技巧让你的 CI/CD 飞起来"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: github-actions-advanced
 featured: false
-draft: true
+draft: false
 tags: ["教程", "开发工具"]
 description: GitHub Actions 进阶技巧，涵盖缓存优化、矩阵构建、定时任务、密钥管理、复合工作流，附实战 YAML 配置。
 ---

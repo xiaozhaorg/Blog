@@ -1,9 +1,9 @@
 ---
 title: "Jellyfin 影音库搭建指南：Plex 免费替代，4K 硬解全平台"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: jellyfin-media-server
 featured: false
-draft: true
+draft: false
 tags: ["免费工具", "开源", "教程"]
 description: Jellyfin 是开源免费的媒体服务器，本文详解 Docker 部署、元数据刮削、硬件转码、客户端配置，打造私人影音库。
 ---

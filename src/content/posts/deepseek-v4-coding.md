@@ -1,9 +1,9 @@
 ---
 title: "DeepSeek V4 编程能力实测：1/10 价格超越 GPT-5.6？详细对比来了"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T07:30:00Z
 slug: deepseek-v4-coding
 featured: false
-draft: true
+draft: false
 tags: ["AI", "大模型"]
 description: DeepSeek V4 编程能力实测对比 GPT-5.6、Claude Sonnet 4，价格仅 1/10 性能却不输，本文详解 API 使用、最佳实践。
 ---

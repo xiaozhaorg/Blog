@@ -1,9 +1,9 @@
 ---
 title: "2026 年 VS Code 必备插件推荐：让开发效率翻倍的 20 个神器"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: vscode-extensions-2026
 featured: false
-draft: true
+draft: false
 tags: ["开发工具", "免费工具"]
 description: 精选 2026 年最值得安装的 VS Code 插件，涵盖 AI 编程、代码美化、Git 增强、效率工具等多个维度，让你的编辑器如虎添翼。
 ---

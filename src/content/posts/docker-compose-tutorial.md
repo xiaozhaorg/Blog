@@ -1,9 +1,9 @@
 ---
 title: "Docker Compose 入门到实战：5 分钟学会容器编排"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: docker-compose-tutorial
 featured: false
-draft: true
+draft: false
 tags: ["教程", "开发工具", "免费工具"]
 description: Docker Compose 入门教程，从安装到实战，涵盖常用命令、YAML 配置、多容器编排、自建开发环境。
 ---

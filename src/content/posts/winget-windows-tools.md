@@ -1,9 +1,9 @@
 ---
 title: "Windows 包管理器 winget 完全指南：告别手动下载安装软件"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: winget-windows-tools
 featured: false
-draft: true
+draft: false
 tags: ["免费工具", "开发工具", "教程"]
 description: Windows 包管理器 winget 命令行安装软件教程，比 scoop 更快更稳定，含常用命令、脚本自动化、批量安装。
 ---

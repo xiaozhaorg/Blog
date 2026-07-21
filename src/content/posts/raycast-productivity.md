@@ -1,9 +1,9 @@
 ---
 title: "Raycast 效率神器完全指南：彻底取代 Spotlight，Mac 用户必装"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: raycast-productivity
 featured: false
-draft: true
+draft: false
 tags: ["开发工具", "免费工具"]
 description: Raycast 是 Mac 上最强效率工具，本文详解安装、扩展推荐、快捷键配置、自定义脚本，让你彻底告别 Spotlight。
 ---

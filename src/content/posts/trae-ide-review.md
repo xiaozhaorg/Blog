@@ -1,9 +1,9 @@
 ---
 title: "Trae IDE 深度体验：字节出品的 AI 原生编辑器，到底值不值得用？"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: trae-ide-review
 featured: false
-draft: true
+draft: false
 tags: ["AI", "开发工具", "免费工具"]
 description: Trae 是字节跳动推出的 AI 原生 IDE，本文深度体验其 Builder 模式、Chat 模式，对比 Cursor、VS Code，告诉你是否值得切换。
 ---

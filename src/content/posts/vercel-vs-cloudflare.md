@@ -1,9 +1,9 @@
 ---
 title: "Vercel vs Cloudflare Pages：静态网站部署终极对比，2026 谁更胜一筹？"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: vercel-vs-cloudflare
 featured: false
-draft: true
+draft: false
 tags: ["教程", "免费工具", "Cloudflare"]
 description: 深入对比 Vercel 和 Cloudflare Pages 的部署体验、性能、价格、免费额度，帮你选择最适合的静态网站托管平台。
 ---

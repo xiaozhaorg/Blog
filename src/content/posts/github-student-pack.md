@@ -1,9 +1,9 @@
 ---
 title: "GitHub Student Developer Pack 完整攻略：学生党免费撸 $1000+ 服务"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: github-student-pack
 featured: false
-draft: true
+draft: false
 tags: ["免费工具", "资源分享", "教程"]
 description: GitHub Student Pack 学生包完整申请攻略，包含 DigitalOcean、Namecheap、JetBrains 等几十个免费权益，附申请流程和注意事项。
 ---

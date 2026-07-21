@@ -1,9 +1,9 @@
 ---
 title: "Cursor 编辑器深度评测：AI 原生 IDE 真的能取代 VS Code 吗？"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T02:15:00Z
 slug: cursor-vs-vscode
 featured: false
-draft: true
+draft: false
 tags: ["AI", "开发工具"]
 description: Cursor 是 AI 原生 IDE，基于 VS Code 开发。本文深度体验 Cursor 的 AI 功能，对比 VS Code + Copilot，告诉你是否值得迁移。
 ---

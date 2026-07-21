@@ -1,9 +1,9 @@
 ---
 title: "Git 进阶技巧：10 个让同事对你刮目相看的高级命令"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: git-advanced-tips
 featured: false
-draft: true
+draft: false
 tags: ["开发工具", "教程"]
 description: 10 个 Git 高级技巧，涵盖交互式 rebase、cherry-pick、worktree、bisect 等，让你的版本控制水平提升一个档次。
 ---

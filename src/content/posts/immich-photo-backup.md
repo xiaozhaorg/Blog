@@ -1,9 +1,9 @@
 ---
 title: "Immich 自建相册：Google Photos 的完美替代，AI 自动分类人脸识别"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: immich-photo-backup
 featured: false
-draft: true
+draft: false
 tags: ["免费工具", "开源", "教程"]
 description: Immich 是开源的自托管相册应用，AI 自动分类、人脸识别、地图视图，是 Google Photos 的最佳替代品，本文详解部署使用。
 ---

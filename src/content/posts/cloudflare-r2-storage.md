@@ -1,9 +1,9 @@
 ---
 title: "Cloudflare R2 对象存储完全指南：10GB 免费存储，替代 S3 的最佳选择"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T06:45:00Z
 slug: cloudflare-r2-storage
 featured: false
-draft: true
+draft: false
 tags: ["Cloudflare", "教程", "免费工具"]
 description: 详细教程教你在 Cloudflare R2 上使用免费对象存储，含 S3 兼容 API、CDN 加速、自定义域名配置，替代 AWS S3 节省成本。
 ---

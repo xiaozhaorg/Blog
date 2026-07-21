@@ -1,9 +1,9 @@
 ---
 title: "Rust vs Go 2026：谁才是后端开发之王？深度对比帮你选型"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: rust-vs-go
 featured: false
-draft: true
+draft: false
 tags: ["开发工具", "大模型"]
 description: Rust 和 Go 都是现代系统级语言，本文从性能、生态、学习曲线、并发模型等维度深度对比，帮你选择合适的后端语言。
 ---

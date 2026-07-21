@@ -1,9 +1,9 @@
 ---
 title: "Ubuntu Server 初始化配置：拿到新服务器必做的 10 件事"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: ubuntu-server-setup
 featured: false
-draft: true
+draft: false
 tags: ["教程", "免费工具"]
 description: 拿到新的 Ubuntu 服务器后必做的 10 件事：SSH 安全、防火墙、自动更新、时区、Docker、监控等，一键脚本搞定。
 ---

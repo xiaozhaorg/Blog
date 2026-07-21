@@ -1,9 +1,9 @@
 ---
 title: "n8n 自托管工作流自动化：Zapier 的开源替代，连接一切应用"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: n8n-workflow-automation
 featured: false
-draft: true
+draft: false
 tags: ["免费工具", "开源", "教程"]
 description: n8n 是开源的工作流自动化工具，400+ 集成，可视化拖拽搭建工作流，本文详解 Docker 部署、常见场景、实战模板。
 ---

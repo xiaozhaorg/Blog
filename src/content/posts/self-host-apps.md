@@ -1,9 +1,9 @@
 ---
 title: "自托管 20 个必备开源应用：告别云服务订阅，掌控自己的数据"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: self-host-apps
 featured: false
-draft: true
+draft: false
 tags: ["免费工具", "开源", "教程"]
 description: 精选 20 个最值得自托管的开源应用，替代各类付费云服务，从笔记、网盘、影音到协作工具，掌控自己的数据。
 ---

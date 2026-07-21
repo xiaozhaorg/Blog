@@ -1,9 +1,9 @@
 ---
 title: "Zed 编辑器体验：号称最快的代码编辑器，到底有多强？"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: zed-vs-vscode
 featured: false
-draft: true
+draft: false
 tags: ["开发工具", "免费工具"]
 description: Zed 是 Rust 写的代码编辑器，号称 GPU 加速、最快速度。本文深度体验 Zed，对比 VS Code、Sublime Text，告诉你是否值得尝试。
 ---

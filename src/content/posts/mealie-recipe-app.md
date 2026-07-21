@@ -1,9 +1,9 @@
 ---
 title: "Mealie 自建菜谱应用：告别下厨房广告，掌控你的私人厨房"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: mealie-recipe-app
 featured: false
-draft: true
+draft: false
 tags: ["免费工具", "开源", "教程"]
 description: Mealie 是开源的自托管菜谱管理应用，支持网页爬取菜谱、膳食计划、购物清单，是下厨房/豆果美食的完美替代。
 ---

@@ -1,9 +1,9 @@
 ---
 title: "NAS 折腾指南：从硬件选购到系统搭建，打造你的家庭数据中心"
-pubDatetime: 2026-07-20T00:00:00Z
+pubDatetime: 2026-07-21T01:30:00Z
 slug: nas-diy-guide
 featured: false
-draft: true
+draft: false
 tags: ["教程", "免费工具"]
 description: 手把手教你 DIY 一台 NAS，涵盖硬件选购清单、TrueNAS/Unraid 系统安装、远程访问、影音库搭建，私有云存储完整方案。
 ---
