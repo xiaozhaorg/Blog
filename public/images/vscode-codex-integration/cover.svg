@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg-ai" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16213e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-purple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-strong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg-ai)"/>
+
+  <circle cx="1050" cy="100" r="160" fill="#7c3aed" opacity="0.15"/>
+  <circle cx="980" cy="500" r="200" fill="#00d4ff" opacity="0.1"/>
+
+  <g opacity="0.06" fill="#00d4ff">
+    <rect x="60" y="60" width="20" height="20"/>
+    <rect x="90" y="60" width="20" height="20"/>
+    <rect x="60" y="90" width="20" height="20"/>
+    <rect x="1140" y="540" width="20" height="20"/>
+    <rect x="1110" y="540" width="20" height="20"/>
+    <rect x="1140" y="510" width="20" height="20"/>
+  </g>
+
+  <g transform="translate(680, 130)" filter="url(#shadow)">
+    <rect x="0" y="0" width="440" height="260" rx="12" fill="#0f172a" stroke="#00d4ff" stroke-width="2" opacity="0.95"/>
+    <rect x="0" y="0" width="440" height="36" rx="12" fill="#1e293b"/>
+    <rect x="0" y="24" width="440" height="12" fill="#1e293b"/>
+
+    <rect x="12" y="10" width="60" height="16" rx="3" fill="#334155"/>
+    <text x="42" y="22" font-family="system-ui, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">main.ts</text>
+    <rect x="80" y="10" width="60" height="16" rx="3" fill="#0f172a"/>
+    <text x="110" y="22" font-family="system-ui, sans-serif" font-size="10" fill="#64748b" text-anchor="middle">utils.ts</text>
+
+    <text x="15" y="60" font-family="monospace" font-size="13" fill="#7c3aed">function</text>
+    <text x="85" y="60" font-family="monospace" font-size="13" fill="#00d4ff">fetchData</text>
+    <text x="160" y="60" font-family="monospace" font-size="13" fill="#e2e8f0">() {</text>
+
+    <text x="30" y="85" font-family="monospace" font-size="13" fill="#64748b">// AI 建议：</text>
+    <text x="30" y="105" font-family="monospace" font-size="13" fill="#10b981">const</text>
+    <text x="80" y="105" font-family="monospace" font-size="13" fill="#e2e8f0">res = </text>
+    <text x="125" y="105" font-family="monospace" font-size="13" fill="#7c3aed">await</text>
+    <text x="175" y="105" font-family="monospace" font-size="13" fill="#00d4ff">fetch</text>
+    <text x="220" y="105" font-family="monospace" font-size="13" fill="#e2e8f0">(url)</text>
+
+    <rect x="30" y="115" width="380" height="55" rx="6" fill="#1e1b4b" stroke="#7c3aed" stroke-width="1" opacity="0.7"/>
+    <circle cx="45" cy="135" r="6" fill="url(#accent-purple)"/>
+    <text x="60" y="140" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#ec4899">Codex AI</text>
+    <text x="45" y="160" font-family="system-ui, sans-serif" font-size="11" fill="#cbd5e1">建议添加 try-catch 错误处理...</text>
+
+    <text x="15" y="195" font-family="monospace" font-size="13" fill="#e2e8f0">}</text>
+
+    <rect x="15" y="220" width="410" height="28" rx="4" fill="#1e293b"/>
+    <text x="25" y="238" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">询问 Codex 完成任务...</text>
+    <rect x="395" y="225" width="22" height="18" rx="3" fill="url(#accent-cyan)"/>
+    <text x="406" y="238" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">→</text>
+  </g>
+
+  <g transform="translate(870, 410)" filter="url(#glow-strong)">
+    <circle cx="60" cy="60" r="50" fill="url(#accent-cyan)" opacity="0.95"/>
+    <text x="60" y="55" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">AI</text>
+    <text x="60" y="78" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#0f172a" text-anchor="middle">CODEX</text>
+
+    <g transform="translate(0, 0)" opacity="0.6">
+      <circle cx="60" cy="60" r="65" fill="none" stroke="#00d4ff" stroke-width="1" stroke-dasharray="4,4">
+        <animateTransform attributeName="transform" type="rotate" from="0 60 60" to="360 60 60" dur="20s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </g>
+
+  <text x="80" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="800" fill="#ffffff">
+    AI 结对编程
+  </text>
+  <text x="80" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="30" font-weight="500" fill="#00d4ff">
+    VS Code + OpenAI Codex
+  </text>
+  <text x="80" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="400" fill="#94a3b8">
+    深度集成实战教程
+  </text>
+
+  <rect x="80" y="375" width="140" height="5" rx="2" fill="url(#accent-cyan)"/>
+
+  <text x="80" y="565" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#ffffff" opacity="0.9">
+    小吒の博客
+  </text>
+  <text x="930" y="565" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="400" fill="#94a3b8" opacity="0.8">
+    AI · VS Code · 编程助手
+  </text>
+</svg>
